@@ -10,10 +10,13 @@ public class NetProxy implements NetProcessor {
 
     private static NetProxy _instance;
     private static NetProcessor mNetProcessor = null;
+    private static String mBaseUrl;
     private Map<String, Object> params;
 
-    public static void init(NetProcessor netProcessor){
+
+    public static void init(NetProcessor netProcessor, String baseUrl){
         mNetProcessor = netProcessor;
+        mBaseUrl = baseUrl;
     }
 
     private NetProxy(){
@@ -46,7 +49,7 @@ public class NetProxy implements NetProcessor {
      * 自动组装请求参数
      * */
     private String appendParams(String urlAction, Map<String, Object> params) {
-        StringBuffer stringBuffer = new StringBuffer(BuildConfig.BUILD_GRADLE_BASEURL);
+        StringBuffer stringBuffer = new StringBuffer(mBaseUrl);
         stringBuffer.append(urlAction);
         if(params.isEmpty() || params == null){
             return stringBuffer.toString();
