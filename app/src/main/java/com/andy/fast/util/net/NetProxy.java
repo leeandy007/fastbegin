@@ -1,0 +1,73 @@
+package com.andy.fast.util.net;
+
+import com.andy.fast.BuildConfig;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+public class NetProxy implements NetProcessor {
+
+    private static NetProxy _instance;
+    private static NetProcessor mNetProcessor = null;
+    private Map<String, Object> params;
+
+    public static void init(NetProcessor netProcessor){
+        mNetProcessor = netProcessor;
+    }
+
+    private NetProxy(){
+        params = new HashMap<>();
+    }
+
+    public static NetProxy obtain(){
+        synchronized (NetProxy.class){
+            if(null == _instance){
+                _instance = new NetProxy();
+            }
+        }
+        return _instance;
+    }
+
+    @Override
+    public void get(String urlAction, Map<String, Object> params, Callback callback) {
+        final String finalUrl = appendParams(urlAction, params);
+        mNetProcessor.get(finalUrl, params, callback);
+    }
+
+    @Override
+    public void post(String urlAction, Map<String, Object> params, Callback callback) {
+        final String finalUrl = appendParams(urlAction, params);
+        mNetProcessor.post(finalUrl, params, callback);
+    }
+
+
+    /**
+     * 自动组装请求参数
+     * */
+    private String appendParams(String urlAction, Map<String, Object> params) {
+        StringBuffer stringBuffer = new StringBuffer(BuildConfig.BUILD_GRADLE_BASEURL);
+        stringBuffer.append(urlAction);
+        if(params.isEmpty() || params == null){
+            return stringBuffer.toString();
+        }
+        // 存储封装好的请求体信息
+        if(stringBuffer.indexOf("?") <= 0){
+            stringBuffer.append("?");
+        } else {
+            if(!stringBuffer.toString().endsWith("?")){
+                stringBuffer.append("&");
+            }
+        }
+        try {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                stringBuffer.append(entry.getKey()).append("=").append(URLEncoder.encode(entry.getValue().toString(),"utf-8")).append("&");
+            }
+            stringBuffer.deleteCharAt(stringBuffer.length() - 1); // 删除最后的一个"&"
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuffer.toString();
+    }
+
+}
