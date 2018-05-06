@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 public class ImageProxy implements ImageProcessor {
 
-    private static Context _context;
     private static ImageProxy _instance;
     private static ImageProcessor mImageProcessor;
 
@@ -16,11 +15,10 @@ public class ImageProxy implements ImageProcessor {
         mImageProcessor = imageProcessor;
     }
 
-    public static ImageProxy obtain(Context context){
+    public static ImageProxy obtain(){
         synchronized (ImageProxy.class){
             if(null == _instance){
                 _instance = new ImageProxy();
-                _context = context;
             }
         }
         return _instance;
