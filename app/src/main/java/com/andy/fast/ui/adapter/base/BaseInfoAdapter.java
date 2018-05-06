@@ -6,6 +6,8 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 /**
  * @author leeandy007
  * @Desc: 一级列表适配器基类
@@ -71,7 +73,8 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 		BaseInfoViewHolder holder = null;
 		if(convertView == null){
 			holder = (BaseInfoViewHolder) mViewHolderCreator.createHolder();
-			convertView = holder.CreateView(parent.getContext());
+			convertView = View.inflate(parent.getContext(), holder.getLayout(), null);
+			ButterKnife.bind(this, convertView);
 			holder.initView(convertView);
 			convertView.setTag(holder);
 		} else {

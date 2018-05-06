@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.ButterKnife;
+
 /**
  * 
  * @author leeandy007 一级多选列表
@@ -97,7 +99,8 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 		BaseCheckedHolder holder = null;
 		if (convertView == null) {
 			holder = (BaseCheckedHolder) mViewHolderCreator.createHolder();
-			convertView = holder.CreateView(parent.getContext());
+			convertView = View.inflate(parent.getContext(), holder.getLayout(), null);
+			ButterKnife.bind(this, convertView);
 			holder.initView(convertView);
 			convertView.setTag(holder);
 		} else {
