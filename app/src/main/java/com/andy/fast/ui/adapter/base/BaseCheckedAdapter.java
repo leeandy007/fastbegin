@@ -100,9 +100,9 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 		if (convertView == null) {
 			holder = (BaseCheckedHolder) mViewHolderCreator.createHolder();
 			convertView = View.inflate(parent.getContext(), holder.getLayout(), null);
-			ButterKnife.bind(this, convertView);
 			holder.initView(convertView);
 			convertView.setTag(holder);
+			ButterKnife.bind(this, convertView);
 		} else {
 			holder = (BaseCheckedHolder) convertView.getTag();
 		}

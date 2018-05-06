@@ -74,9 +74,9 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 		if(convertView == null){
 			holder = (BaseInfoViewHolder) mViewHolderCreator.createHolder();
 			convertView = View.inflate(parent.getContext(), holder.getLayout(), null);
-			ButterKnife.bind(this, convertView);
 			holder.initView(convertView);
 			convertView.setTag(holder);
+			ButterKnife.bind(this, convertView);
 		} else {
 			holder = (BaseInfoViewHolder) convertView.getTag();
 		}
