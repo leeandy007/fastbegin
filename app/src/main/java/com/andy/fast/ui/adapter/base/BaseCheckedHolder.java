@@ -13,6 +13,7 @@ public abstract class BaseCheckedHolder<T> extends BaseInfoViewHolder{
 		this.checkedResId = checkedResId;
 	}
 
+	@Override
 	public void initView(View view) {
 		mCheckBox = (CheckBox) view.findViewById(checkedResId);
 	}
