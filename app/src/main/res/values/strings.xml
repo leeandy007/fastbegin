@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">fastbegin</string>
+
+    <string name="bottom_navigation_view_behavior">com.andy.fast.widget.BottomNavigationViewBehavior</string>
+    <string name="float_behavior">com.andy.fast.widget.behavior.FloatButtonBehavior</string>
+    <string name="bottom_behavior">com.andy.fast.widget.behavior.BottomBehavior</string>
+    <string name="top_behavior">com.andy.fast.widget.behavior.TopBehavior</string>
 </resources>
