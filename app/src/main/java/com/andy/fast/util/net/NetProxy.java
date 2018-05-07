@@ -6,6 +6,8 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.String.valueOf;
+
 public class NetProxy implements NetProcessor {
 
     private static NetProxy _instance;
@@ -40,7 +42,7 @@ public class NetProxy implements NetProcessor {
 
     @Override
     public void post(String urlAction, Map<String, Object> params, Callback callback) {
-        final String finalUrl = appendParams(urlAction, params);
+        final String finalUrl = mBaseUrl + urlAction;
         mNetProcessor.post(finalUrl, params, callback);
     }
 
@@ -64,7 +66,7 @@ public class NetProxy implements NetProcessor {
         }
         try {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                stringBuffer.append(entry.getKey()).append("=").append(URLEncoder.encode(entry.getValue().toString(),"utf-8")).append("&");
+                stringBuffer.append(valueOf(entry.getKey())).append("=").append(URLEncoder.encode(valueOf(entry.getValue()),"utf-8")).append("&");
             }
             stringBuffer.deleteCharAt(stringBuffer.length() - 1); // 删除最后的一个"&"
         } catch (Exception e) {
