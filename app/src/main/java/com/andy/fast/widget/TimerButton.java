@@ -50,6 +50,7 @@ public class TimerButton extends AppCompatButton implements View.OnClickListener
             }
         }
     };
+
     @Override
     public void setOnClickListener(OnClickListener onClickListener) {//提供外部访问方法
         if (onClickListener instanceof TimerButton) {
