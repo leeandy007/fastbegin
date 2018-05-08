@@ -16,11 +16,17 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> extends AppCompatActivity {
 
-    //上下文
+    /**
+     * 上下文
+     * */
     protected Context _context;
-    //交换层
+    /**
+     * 交换层
+     * */
     protected T presenter;
-    //butter
+    /**
+     * butter
+     * */
     protected Unbinder unbinder;
 
     @Override
