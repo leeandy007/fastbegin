@@ -1,7 +1,5 @@
 package com.andy.fast.util.net;
 
-import com.andy.fast.BuildConfig;
-
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;

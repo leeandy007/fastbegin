@@ -8,14 +8,24 @@ import java.lang.ref.WeakReference;
 public class BasePresenter<T extends IView> {
 
     //弱引用
-    protected WeakReference<T> iView;
+    protected WeakReference<T> viewReference;
+
+    protected T mView;
+
+    private T getView(){
+        return viewReference.get();
+    }
 
     public void onAttach(T view){
-        iView = new WeakReference<T>(view);
+        viewReference = new WeakReference<T>(view);
+        if(null != viewReference && null != viewReference.get()){
+            mView = getView();
+        }
+
     }
 
     public void onDetach(){
-        iView.clear();
+        viewReference.clear();
     }
 
 }

@@ -6,8 +6,6 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 /**
  * @author leeandy007
  * @Desc: 一级列表适配器基类

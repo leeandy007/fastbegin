@@ -1,7 +1,6 @@
 package com.andy.fast.ui.activity.sub;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.andy.fast.R;
@@ -17,7 +16,7 @@ import java.util.Map;
 public class MainActivity extends BaseActivity<MainView, MainPresenter<MainView>> implements MainView {
 
     @Override
-    protected Context getContext() {
+    public Context getContext() {
         return MainActivity.this;
     }
 
@@ -49,15 +48,15 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter<MainView>
 
     }
 
-    @Override
-    public void showError(String errorMsg) {
-        ToastUtil.obtain().Short(this, errorMsg);
-    }
-
 
     @Override
     public void loadView() {
 
+    }
+
+    @Override
+    public void showToast(String message) {
+        ToastUtil.obtain().Short(this, message);
     }
 
 }

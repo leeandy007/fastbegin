@@ -5,7 +5,6 @@ import com.andy.fast.model.sub.imodel.MainModel;
 import com.andy.fast.util.net.NetCallback;
 import com.andy.fast.util.net.NetProxy;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MainModelImpl implements MainModel {

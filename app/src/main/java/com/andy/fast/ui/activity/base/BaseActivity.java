@@ -45,7 +45,7 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> e
     /**
      * 初始化上下文
      * */
-    protected abstract Context getContext();
+    public abstract Context getContext();
 
     /**
      * 初始化布局

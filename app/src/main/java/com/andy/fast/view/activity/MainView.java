@@ -7,6 +7,4 @@ public interface MainView extends IView {
 
     void getData(DataBean bean);
 
-    void showError(String errorMsg);
-
 }

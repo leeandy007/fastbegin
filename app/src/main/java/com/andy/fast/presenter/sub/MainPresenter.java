@@ -13,19 +13,19 @@ import java.util.Map;
 public class MainPresenter<T extends IView> extends BasePresenter<MainView> {
 
 
-    private MainModel mainModel = new MainModelImpl();
+    private MainModel model = new MainModelImpl();
 
     public void fetch(Map map){
-        iView.get().loadView();
-        mainModel.LoadData(map, new IModel.CallBackListener<DataBean>() {
+        mView.loadView();
+        model.LoadData(map, new IModel.CallBackListener<DataBean>() {
             @Override
             public void onSuccess(DataBean result) {
-                iView.get().getData(result);
+                mView.getData(result);
             }
 
             @Override
             public void onFailure(String errorMsg) {
-                iView.get().showError(errorMsg);
+                mView.showToast(errorMsg);
             }
 
         });
