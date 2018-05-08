@@ -10,6 +10,9 @@ import android.view.View;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 倒计时按钮
+ * */
 public class TimerButton extends AppCompatButton implements View.OnClickListener{
 
     private Context mContext;
