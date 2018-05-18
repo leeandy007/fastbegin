@@ -1,5 +1,7 @@
 package com.andy.fast.util.net;
 
+import com.andy.fast.util.StringUtil;
+
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +66,7 @@ public class NetProxy implements NetProcessor {
         }
         try {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                stringBuffer.append(valueOf(entry.getKey())).append("=").append(URLEncoder.encode(valueOf(entry.getValue()),"utf-8")).append("&");
+                stringBuffer.append(valueOf(entry.getKey())).append("=").append(URLEncoder.encode(StringUtil.isEmptyToString(entry.getValue()),"utf-8")).append("&");
             }
             stringBuffer.deleteCharAt(stringBuffer.length() - 1); // 删除最后的一个"&"
         } catch (Exception e) {

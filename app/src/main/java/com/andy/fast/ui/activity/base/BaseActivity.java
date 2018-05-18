@@ -29,6 +29,8 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> e
      * */
     protected Unbinder unbinder;
 
+    protected Integer page = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
