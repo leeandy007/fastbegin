@@ -34,4 +34,9 @@ public class ImageProxy implements ImageProcessor {
     public void pause(Context context) {
         mImageProcessor.pause(context);
     }
+
+    @Override
+    public void resume(Context context) {
+        mImageProcessor.pause(context);
+    }
 }

@@ -9,4 +9,6 @@ public interface ImageProcessor {
 
     void pause(Context context);
 
+    void resume(Context context);
+
 }
