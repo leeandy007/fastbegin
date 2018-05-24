@@ -7,4 +7,6 @@ public interface ImageProcessor {
 
     void load(Context context, String url, ImageView imageView, int defaultImage, int errorImage);
 
+    void pause(Context context);
+
 }
