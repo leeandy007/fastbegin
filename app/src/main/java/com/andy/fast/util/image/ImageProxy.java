@@ -29,4 +29,9 @@ public class ImageProxy implements ImageProcessor {
     public void load(Context context, String url, ImageView imageView, int defaultImage, int errorImage) {
         mImageProcessor.load(context, url, imageView, defaultImage, errorImage);
     }
+
+    @Override
+    public void pause(Context context) {
+        mImageProcessor.pause(context);
+    }
 }
