@@ -8,4 +8,6 @@ public interface NetProcessor {
 
     void post(String url, Map<String, Object> params, Callback callback);
 
+    void getBitmap(String url, ImageCallback callback);
+
 }

@@ -1,10 +1,13 @@
 package com.andy.fast.util.net;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -85,6 +88,43 @@ public class OkhttpProcessor implements NetProcessor {
             postFile(url, map, files, callback);
         }
 
+    }
+
+    @Override
+    public void getBitmap(String url, final ImageCallback callback) {
+        Request request = new Request.Builder().url(url).build();
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFailure(e.toString());
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) {
+                if (response.isSuccessful()) {
+                    InputStream inputStream = response.body().byteStream();
+                    final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(bitmap);
+                        }
+                    });
+                } else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onFailure(response.message().toString());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void postForm(String url, Map<String, Object> params, final Callback callback){

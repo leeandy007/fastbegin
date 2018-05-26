@@ -46,6 +46,11 @@ public class NetProxy implements NetProcessor {
         mNetProcessor.post(finalUrl, params, callback);
     }
 
+    @Override
+    public void getBitmap(String url, ImageCallback callback) {
+        mNetProcessor.getBitmap(url, callback);
+    }
+
 
     /**
      * 自动组装请求参数
