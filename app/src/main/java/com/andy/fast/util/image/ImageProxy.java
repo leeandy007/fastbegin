@@ -1,42 +1,19 @@
 package com.andy.fast.util.image;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
-import android.content.Context;
-import android.widget.ImageView;
+public class ImageProxy implements InvocationHandler {
 
-public class ImageProxy implements ImageProcessor {
+    private Object mObject;
 
-    private static ImageProxy _instance;
-    private static ImageProcessor mImageProcessor;
-
-    private ImageProxy() {}
-
-    public static void init(ImageProcessor imageProcessor){
-        mImageProcessor = imageProcessor;
-    }
-
-    public static ImageProxy obtain(){
-        synchronized (ImageProxy.class){
-            if(null == _instance){
-                _instance = new ImageProxy();
-            }
-        }
-        return _instance;
-    }
-
-
-    @Override
-    public void load(Context context, String url, ImageView imageView, int defaultImage, int errorImage) {
-        mImageProcessor.load(context, url, imageView, defaultImage, errorImage);
+    public ImageProxy(Object object) {
+        mObject = object;
     }
 
     @Override
-    public void pause(Context context) {
-        mImageProcessor.pause(context);
-    }
-
-    @Override
-    public void resume(Context context) {
-        mImageProcessor.resume(context);
+    public Object invoke(Object object, Method method, Object[] args) throws Throwable {
+        method.invoke(mObject, args);
+        return null;
     }
 }
