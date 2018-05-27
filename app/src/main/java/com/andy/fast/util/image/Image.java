@@ -12,10 +12,12 @@ public class Image {
 
     private Image() {}
 
+    //在Application中初始化
     public static void init(ImageCallback call){
         callback = (ImageCallback) Proxy.newProxyInstance(call.getClass().getClassLoader(), call.getClass().getInterfaces(), new ImageProxy(call));
     }
 
+    //获取单例对象
     public static Image obtain(){
         synchronized (Image.class){
             if(null == _instance){
