@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.andy.fast.util.bus.Bus;
+
 import butterknife.ButterKnife;
 
 /**
@@ -15,6 +17,7 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
     public BaseRecyclerViewHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
+        Bus.obtain().register(this);
         initView(view);
     }
 

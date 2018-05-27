@@ -4,6 +4,8 @@ import android.content.Context;
 
 import android.view.View;
 
+import com.andy.fast.util.bus.Bus;
+
 import butterknife.ButterKnife;
 
 /**
@@ -15,6 +17,7 @@ public abstract class BaseInfoViewHolder<T> {
     public View CreateView(Context context){
         View view = View.inflate(context, getLayout(), null);
         ButterKnife.bind(this, view);
+        Bus.obtain().register(this);
         return view;
     }
 
