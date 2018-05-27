@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.andy.fast.presenter.base.BasePresenter;
+import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
 import butterknife.ButterKnife;
@@ -66,6 +67,8 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> e
 		presenter.onAttach((V)this);
 		//初始化butter
 		unbinder = ButterKnife.bind(this, v);
+		//注册Bus
+		Bus.obtain().register(this);
 		initView(v);
 		initData();
 		return v;
@@ -140,5 +143,7 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> e
 		presenter.onDetach();
 		//解绑butter
 		unbinder.unbind();
+		//解绑Bus
+		Bus.obtain().unregister(this);
 	}
 }
