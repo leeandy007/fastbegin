@@ -130,7 +130,7 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 	 * @param position
 	 * @param convertView
 	 */
-	public abstract void setItemView(Context context, BaseCheckedHolder holder, int position,
+	public abstract void setItemView(Context context, BaseCheckedHolder<T> holder, int position,
 			View convertView);
 
 	/**
@@ -140,15 +140,13 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 	public class CheckedBean {
 
 		private boolean checked;
-		private Object object;
+		private T object;
 
 		public CheckedBean(boolean checked) {
-			super();
 			this.checked = checked;
 		}
 
-		public CheckedBean(boolean checked, Object object) {
-			super();
+		public CheckedBean(boolean checked, T object) {
 			this.checked = checked;
 			this.object = object;
 		}
@@ -161,11 +159,11 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 			this.checked = checked;
 		}
 
-		public Object getObject() {
+		public T getObject() {
 			return object;
 		}
 
-		public void setObject(Object object) {
+		public void setObject(T object) {
 			this.object = object;
 		}
 	}

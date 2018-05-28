@@ -4,7 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 
-public abstract class BaseCheckedHolder<T> extends BaseInfoViewHolder{
+import com.andy.fast.util.bus.Bus;
+
+import butterknife.ButterKnife;
+
+public abstract class BaseCheckedHolder<T>{
 
 	protected CheckBox mCheckBox;
 	protected int checkedResId;
@@ -13,13 +17,18 @@ public abstract class BaseCheckedHolder<T> extends BaseInfoViewHolder{
 		this.checkedResId = checkedResId;
 	}
 
-	@Override
-	public void initView(View view) {
-		mCheckBox = (CheckBox) view.findViewById(checkedResId);
+	public View CreateView(Context context){
+		View view = View.inflate(context, getLayout(), null);
+		ButterKnife.bind(this, view);
+		Bus.obtain().register(this);
+		return view;
 	}
 
-	@Override
-	public void initData(Context context, Object o, int position) {}
+	public abstract int getLayout();
+
+	public void initView(View view) {
+		mCheckBox = view.findViewById(checkedResId);
+	}
 
 	public abstract void initData(Context context, T t, int position, BaseCheckedAdapter<T>.CheckedBean checked);
 
