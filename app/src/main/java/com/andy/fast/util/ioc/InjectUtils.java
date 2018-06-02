@@ -39,9 +39,9 @@ public class InjectUtils {
             if(injectView != null){
                 try {
                     Method method = clazz.getMethod("findViewById", int.class);
-                    View view = (View) method.invoke(context, injectView.value());
+                    View view = (View) method.invoke(context, injectView.value());//得到成员变量的具体实例值
                     field.setAccessible(true);
-                    field.set(context, view);
+                    field.set(context, view);//给成员变量赋值
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
