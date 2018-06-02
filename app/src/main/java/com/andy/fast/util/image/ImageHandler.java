@@ -3,11 +3,11 @@ package com.andy.fast.util.image;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class ImageProxy implements InvocationHandler {
+public class ImageHandler implements InvocationHandler {
 
     private Object mObject;
 
-    public ImageProxy(Object object) {
+    public ImageHandler(Object object) {
         mObject = object;
     }
 

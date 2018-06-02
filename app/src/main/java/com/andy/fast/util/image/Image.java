@@ -14,7 +14,7 @@ public class Image {
 
     //在Application中初始化
     public static void init(ImageCallback call){
-        callback = (ImageCallback) Proxy.newProxyInstance(call.getClass().getClassLoader(), call.getClass().getInterfaces(), new ImageProxy(call));
+        callback = (ImageCallback) Proxy.newProxyInstance(call.getClass().getClassLoader(), call.getClass().getInterfaces(), new ImageHandler(call));
     }
 
     //获取单例对象
