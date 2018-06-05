@@ -15,10 +15,10 @@ public  abstract class NetCallback<Result> implements Callback {
         onSuccess(changeResult(result));
     }
 
-    public static Class<?> analysisClassInfo(Object object){
-        Type genType = object.getClass().getGenericSuperclass();
-        Type[] params = ((ParameterizedType)genType).getActualTypeArguments();
-        return (Class<?>) params[0];
+    public static Type analysisClassInfo(Object object){
+        Type genType = object.getClass().getGenericSuperclass();//获得带有泛型的父类
+        Type[] params = ((ParameterizedType)genType).getActualTypeArguments();//getActualTypeArguments获取参数化类型(泛型)的数组
+        return params[0];//返回第一个泛型
 
     }
 
@@ -27,9 +27,8 @@ public  abstract class NetCallback<Result> implements Callback {
      * */
     private Result changeResult(String result){
         Gson gson = new Gson();
-        Class<?> clz = analysisClassInfo(this);
-        Result objResult = (Result) gson.fromJson(result, clz);
-        return objResult;
+        Type type = analysisClassInfo(this);
+        return gson.fromJson(result, type);
     }
 
 }
