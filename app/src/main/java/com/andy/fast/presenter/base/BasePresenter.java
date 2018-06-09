@@ -1,5 +1,6 @@
 package com.andy.fast.presenter.base;
 
+import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
 import java.lang.ref.WeakReference;
@@ -35,6 +36,7 @@ public class BasePresenter<T extends IView> {
         viewReference = new WeakReference<T>(view);
         if(null != viewReference && null != viewReference.get()){
             mView = getView();
+            Bus.obtain().register(this);
         }
     }
 
@@ -43,6 +45,7 @@ public class BasePresenter<T extends IView> {
      */
     public void onDetach(){
         viewReference.clear();
+        Bus.obtain().unregister(this);
     }
 
 }
