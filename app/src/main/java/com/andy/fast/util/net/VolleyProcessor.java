@@ -24,7 +24,6 @@ public class VolleyProcessor implements NetProcessor {
 
     public VolleyProcessor(Context context) {
         mQueue = Volley.newRequestQueue(context);
-
     }
 
     @Override
