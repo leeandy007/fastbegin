@@ -200,7 +200,7 @@ public class OkhttpProcessor implements NetProcessor {
         }
         if (null != params && !params.isEmpty()) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                body.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
+                body.addFormDataPart(valueOf(entry.getKey()), entry.getValue()==null?"":valueOf(entry.getValue()));
             }
         }
         return body.build();

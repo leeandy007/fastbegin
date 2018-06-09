@@ -63,7 +63,7 @@ public class VolleyProcessor implements NetProcessor {
                     return map;
                 }
                 for (Map.Entry<String, Object> entry : params.entrySet()) {
-                    map.put(valueOf(entry.getKey()), valueOf(entry.getValue()));
+                    map.put(valueOf(entry.getKey()), entry.getValue()==null?"":valueOf(entry.getValue()));
                 }
                 return map;
             }
