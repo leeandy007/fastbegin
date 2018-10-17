@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.yanzhenjie:permission:1.0.7'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
-    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.bigkoo:ConvenientBanner:2.1.4'
     implementation 'com.mcxiaoke.volley:library:1.0.+'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
