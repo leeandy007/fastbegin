@@ -10,7 +10,7 @@ import com.andy.fast.view.activity.MainView;
 
 import java.util.Map;
 
-public class MainPresenter<T extends IView> extends BasePresenter<MainView> {
+public class MainPresenter extends BasePresenter<MainView> {
 
 
     private MainModel model = new MainModelImpl();

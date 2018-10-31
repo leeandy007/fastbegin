@@ -32,7 +32,7 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> e
 	//butter
 	protected Unbinder unbinder;
 
-	protected Integer page = 0;
+	protected Integer page = 1;
 
 	/**
 	 * Activity取Fragment所传递的值时调用的回调接口

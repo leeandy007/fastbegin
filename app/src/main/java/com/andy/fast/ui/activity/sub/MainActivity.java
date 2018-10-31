@@ -13,7 +13,7 @@ import com.andy.fast.view.activity.MainView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends BaseActivity<MainView, MainPresenter<MainView>> implements MainView {
+public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
 
     @Override
     public Context getContext() {
@@ -26,8 +26,8 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter<MainView>
     }
 
     @Override
-    public MainPresenter<MainView> CreatePresenter() {
-        return new MainPresenter<>();
+    public MainPresenter CreatePresenter() {
+        return new MainPresenter();
     }
 
     @Override

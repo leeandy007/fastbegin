@@ -29,7 +29,7 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> e
      * */
     protected Unbinder unbinder;
 
-    protected Integer page = 0;
+    protected Integer page = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
