@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.andy.fast.R;
+import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
+import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
@@ -110,6 +112,20 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> e
     protected void animBack(){
         /**------>>>左入右出*/
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    /**
+     * @Desc Toast
+     * */
+    protected void showToast(ToastMode mode, String message){
+        switch (mode){
+            case SHORT:
+                ToastUtil.obtain().Short(_context, message);
+                break;
+            case LONG:
+                ToastUtil.obtain().Long(_context, message);
+                break;
+        }
     }
 
 }

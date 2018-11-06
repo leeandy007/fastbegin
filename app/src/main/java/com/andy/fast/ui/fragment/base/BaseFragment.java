@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
+import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
@@ -145,5 +147,19 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> e
 		unbinder.unbind();
 		//解绑Bus
 		Bus.obtain().unregister(this);
+	}
+
+	/**
+	 * @Desc Toast
+	 * */
+	protected void showToast(ToastMode mode, String message){
+		switch (mode){
+			case SHORT:
+				ToastUtil.obtain().Short(_context, message);
+				break;
+			case LONG:
+				ToastUtil.obtain().Long(_context, message);
+				break;
+		}
 	}
 }
