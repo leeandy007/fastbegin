@@ -152,7 +152,7 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> e
 	/**
 	 * @Desc Toast
 	 * */
-	protected void showToast(ToastMode mode, String message){
+	public void showToast(ToastMode mode, String message){
 		switch (mode){
 			case SHORT:
 				ToastUtil.obtain().Short(_context, message);

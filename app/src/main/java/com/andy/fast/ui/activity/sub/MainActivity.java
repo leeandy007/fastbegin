@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.andy.fast.R;
 import com.andy.fast.bean.DataBean;
+import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.sub.MainPresenter;
 import com.andy.fast.ui.activity.base.BaseActivity;
 import com.andy.fast.util.ToastUtil;
@@ -44,7 +45,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public void getData(DataBean bean) {
-        ToastUtil.obtain().Short(this, bean.getReason());
 
     }
 
@@ -52,11 +52,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @Override
     public void loadView() {
 
-    }
-
-    @Override
-    public void showToast(String message) {
-        ToastUtil.obtain().Short(this, message);
     }
 
 }
