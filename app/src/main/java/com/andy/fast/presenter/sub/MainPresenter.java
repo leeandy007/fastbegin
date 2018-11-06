@@ -1,5 +1,6 @@
 package com.andy.fast.presenter.sub;
 
+import com.andy.fast.enums.ToastMode;
 import com.andy.fast.model.base.IModel;
 import com.andy.fast.bean.DataBean;
 import com.andy.fast.model.sub.imodel.MainModel;
@@ -25,7 +26,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
             @Override
             public void onFailure(String errorMsg) {
-                mView.showToast(errorMsg);
+                mView.showToast(ToastMode.SHORT, errorMsg);
             }
 
         });
