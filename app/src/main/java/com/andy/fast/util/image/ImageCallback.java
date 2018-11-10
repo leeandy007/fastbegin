@@ -10,7 +10,7 @@ public interface ImageCallback {
 
     void load(Context context, String url, ImageView imageView, int defaultImage, int errorImage);
 
-    void load(Context context, int resId, ImageView imageView, int defaultImage, int errorImage);
+    void load(Context context, Integer resId, ImageView imageView, int defaultImage, int errorImage);
 
     void load(Context context, File file, ImageView imageView, int defaultImage, int errorImage);
 
