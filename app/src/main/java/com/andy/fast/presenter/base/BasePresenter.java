@@ -41,6 +41,7 @@ public abstract class BasePresenter<T extends IView, K extends IModel> {
     public void onAttach(T view){
         viewReference = new WeakReference<>(view);
         if(null != viewReference && null != viewReference.get()){
+            model = initModelImpl();
             mView = getView();
             Bus.obtain().register(this);
         }
