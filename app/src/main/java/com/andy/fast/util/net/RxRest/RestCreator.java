@@ -1,8 +1,7 @@
 package com.andy.fast.util.net.RxRest;
 
-
-import com.financial.netloans.net.config.ConfigKeys;
-import com.financial.netloans.net.config.NetConfig;
+import com.andy.fast.util.net.config.ConfigKeys;
+import com.andy.fast.util.net.config.NetConfig;
 
 import java.util.concurrent.TimeUnit;
 
