@@ -1,8 +1,10 @@
 package com.andy.fast.util.image;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.lang.reflect.Proxy;
 
 public class Image {
@@ -27,12 +29,23 @@ public class Image {
         return _instance;
     }
 
-    public void load(Context context, String url, ImageView imageView){
-        load(context, url, imageView, 0, 0);
+    public void load(Context context, Object obj, ImageView imageView){
+        load(context, obj, imageView, 0, 0);
     }
 
-    public void load(Context context, String url, ImageView imageView, int defaultImage, int errorImage){
-        callback.load(context, url, imageView, defaultImage, errorImage);
+    public void load(Context context, Object obj, ImageView imageView, int defaultImage, int errorImage){
+        if(obj instanceof String){
+            callback.load(context, (String) obj, imageView, defaultImage, errorImage);
+        }
+        if(obj instanceof Integer){
+            callback.load(context, (Integer) obj, imageView, defaultImage, errorImage);
+        }
+        if(obj instanceof File){
+            callback.load(context, (File) obj, imageView, defaultImage, errorImage);
+        }
+        if(obj instanceof Uri){
+            callback.load(context, (Uri) obj, imageView, defaultImage, errorImage);
+        }
     }
 
     public void pause(Context context){
