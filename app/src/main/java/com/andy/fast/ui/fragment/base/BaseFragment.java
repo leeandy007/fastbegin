@@ -23,7 +23,7 @@ import butterknife.Unbinder;
  * @Author leeandy007
  * @Date 2016-9-2 下午2:05:15
  */
-public abstract class BaseFragment<V extends IView,T extends BasePresenter<V>> extends Fragment {
+public abstract class BaseFragment<V extends IView,T extends BasePresenter> extends Fragment {
 
 	//上下文
 	protected Context _context;

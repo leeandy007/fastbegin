@@ -16,7 +16,7 @@ import com.andy.fast.view.IView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity<V extends IView,T extends BasePresenter<V>> extends AppCompatActivity {
+public abstract class BaseActivity<V extends IView,T extends BasePresenter> extends AppCompatActivity {
 
     /**
      * 上下文
