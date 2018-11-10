@@ -11,10 +11,12 @@ import com.andy.fast.view.activity.MainView;
 
 import java.util.Map;
 
-public class MainPresenter extends BasePresenter<MainView> {
+public class MainPresenter extends BasePresenter<MainView, MainModel> {
 
-
-    private MainModel model = new MainModelImpl();
+    @Override
+    protected MainModel initModelImpl() {
+        return new MainModelImpl();
+    }
 
     public void fetch(Map map){
         mView.loadView();
@@ -31,5 +33,6 @@ public class MainPresenter extends BasePresenter<MainView> {
 
         });
     }
+
 
 }
