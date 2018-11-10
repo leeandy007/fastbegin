@@ -5,7 +5,6 @@ android {
     compileSdkVersion 26
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -42,6 +41,10 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        baseline file("lint-baseline.xml")
+    }
 }
 
 dependencies {
@@ -63,9 +66,21 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
+    implementation 'com.superluo:textbannerview:1.0.5'
     implementation 'com.mcxiaoke.volley:library:1.0.+'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'org.projectlombok:lombok:1.16.10'
+    annotationProcessor "org.projectlombok:lombok:1.16.10"
+    implementation 'javax.annotation:javax.annotation-api:1.2'
 
 }
