@@ -84,5 +84,6 @@ dependencies {
     implementation 'javax.annotation:javax.annotation-api:1.2'
 
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
 }
