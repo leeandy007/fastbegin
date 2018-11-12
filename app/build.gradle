@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     defaultConfig {
         minSdkVersion 19
         versionCode 1
@@ -49,15 +49,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.android.support:appcompat-v7:27.+'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
 
-    implementation 'com.android.support:design:28.+'
-    implementation 'com.android.support:recyclerview-v7:28.+'
+    implementation 'com.android.support:design:27.+'
+    implementation 'com.android.support:recyclerview-v7:27.+'
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.cjj.materialrefeshlayout:library:1.3.0'
