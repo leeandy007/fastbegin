@@ -9,28 +9,28 @@ import java.lang.ref.WeakReference;
 /**
  * 表示层基类
  * */
-public abstract class BasePresenter<T extends IView, K extends IModel> {
+public abstract class BasePresenter<V extends IView, M extends IModel> {
 
     /**
      * 弱引用
      * */
-    private WeakReference<T> viewReference;
+    private WeakReference<V> viewReference;
 
 
     /**
      * view对象
      */
-    protected T mView;
+    protected V mView;
 
     /**
      * modle对象
      */
-    protected K model;
+    protected M model;
 
     /**
      * @return 返回View对象
      */
-    private T getView(){
+    private V getView(){
         return viewReference.get();
     }
 
@@ -38,7 +38,7 @@ public abstract class BasePresenter<T extends IView, K extends IModel> {
     /**
      * @param view 绑定
      */
-    public void onAttach(T view){
+    public void onAttach(V view){
         viewReference = new WeakReference<>(view);
         if(null != viewReference && null != viewReference.get()){
             model = initModelImpl();
@@ -58,6 +58,6 @@ public abstract class BasePresenter<T extends IView, K extends IModel> {
     /**
      * 初始化model
      */
-    protected abstract K initModelImpl();
+    protected abstract M initModelImpl();
 
 }

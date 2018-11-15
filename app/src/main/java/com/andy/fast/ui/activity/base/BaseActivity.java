@@ -16,7 +16,7 @@ import com.andy.fast.view.IView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity<V extends IView,T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<V extends IView, P extends BasePresenter> extends AppCompatActivity {
 
     /**
      * 上下文
@@ -25,7 +25,7 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter> exte
     /**
      * 交换层
      * */
-    protected T presenter;
+    protected P presenter;
     /**
      * butter
      * */
@@ -65,7 +65,7 @@ public abstract class BaseActivity<V extends IView,T extends BasePresenter> exte
     /**
      * 初始化交换层
      * */
-    protected abstract T CreatePresenter();
+    protected abstract P CreatePresenter();
 
     @Override
     protected void onDestroy() {

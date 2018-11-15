@@ -23,12 +23,12 @@ import butterknife.Unbinder;
  * @Author leeandy007
  * @Date 2016-9-2 下午2:05:15
  */
-public abstract class BaseFragment<V extends IView,T extends BasePresenter> extends Fragment {
+public abstract class BaseFragment<V extends IView, P extends BasePresenter> extends Fragment {
 
 	//上下文
 	protected Context _context;
 	//交换层
-	protected T presenter;
+	protected P presenter;
 	//回调
 	protected FragmentCallBack mCallBack;
 	//butter
@@ -45,7 +45,7 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter> exte
 		 * @param param Object...变参多个不固定个数不规定类型的返回结果
 		 * @DESC Activity中调用取出Fragment中的值
 		 **/
-		public void setResult(Object... param);
+		void setResult(Object... param);
 
 	}
 
@@ -84,7 +84,7 @@ public abstract class BaseFragment<V extends IView,T extends BasePresenter> exte
 	/**
 	 * 初始化交换层
 	 * */
-	protected abstract T CreatePresenter();
+	protected abstract P CreatePresenter();
 
 	/**
 	 * 初始化控件
