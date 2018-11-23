@@ -25,10 +25,16 @@ public  abstract class NetCallback<Result> implements Callback {
     /**
      * 将String转化成泛型对象
      * */
-    private Result changeResult(String result){
-        Gson gson = new Gson();
-        Type type = analysisClassInfo(this);
-        return gson.fromJson(result, type);
+    private Result changeResult(String json){
+        Result result = null;
+        try {
+            Gson gson = new Gson();
+            Type type = analysisClassInfo(this);
+            result = gson.fromJson(json, type);
+        } catch (Exception e) {
+            onFailure(e.getMessage());
+        }
+        return result;
     }
 
 }
