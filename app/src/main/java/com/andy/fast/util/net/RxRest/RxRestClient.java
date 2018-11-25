@@ -82,8 +82,8 @@ public class RxRestClient {
         }
         for (Map.Entry<String, File> entry : files.entrySet()) {
             RequestBody body = RequestBody.create(MultipartBody.FORM, entry.getValue());
-            MultipartBody.Part part = MultipartBody.Part.createFormData("file", entry.getKey(), body);
-            resultMap.put(entry.getKey(), part.body());
+//            MultipartBody.Part part = MultipartBody.Part.createFormData("file", entry.getKey(), body);
+            resultMap.put("file\"; filename=\""+entry.getKey(), body);
         }
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), entry.getValue()==null?"":valueOf(entry.getValue()));
