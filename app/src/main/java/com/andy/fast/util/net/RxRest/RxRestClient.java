@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -71,7 +70,7 @@ public class RxRestClient {
     }
 
     public Observable<String> uploadMore(RxRestService service, String url, Map<String, Object> params) {
-        final Map<String, RequestBody> resultMap;
+        final Map<String, RequestBody> resultMap = new HashMap<>();
         final Map<String, Object> map = new HashMap<>();
         final Map<String, File> files = new HashMap<>();
         for(Map.Entry<String, Object> entry : params.entrySet()){
@@ -81,33 +80,17 @@ public class RxRestClient {
                 map.put(entry.getKey(), entry.getValue());
             }
         }
-        resultMap = appendBodyFiles(map, files);
+        for (Map.Entry<String, File> entry : files.entrySet()) {
+            RequestBody body = RequestBody.create(MultipartBody.FORM, entry.getValue());
+            MultipartBody.Part part = MultipartBody.Part.createFormData("file", entry.getKey(), body);
+            resultMap.put(entry.getKey(), part.body());
+        }
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            RequestBody body = RequestBody.create(MediaType.parse("text/plain"), entry.getValue()==null?"":valueOf(entry.getValue()));
+            resultMap.put(entry.getKey(), body);
+        }
         Observable<String> call = service.uploadMore(url, resultMap);
         return call;
-    }
-
-
-    /**
-     * 拼接form表单提交参数
-     */
-    private Map<String, RequestBody> appendBodyFiles(Map<String, Object> map, Map<String, File> files) {
-        Map<String, RequestBody> resultMap = new HashMap<>();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        if (null != files && !files.isEmpty()) {
-            for (Map.Entry<String, File> entry : files.entrySet()) {
-                RequestBody requestBody = RequestBody.create(MultipartBody.FORM, entry.getValue());
-                // 参数分别为， 请求key ，文件名称 ， RequestBody
-                body.addFormDataPart("file", entry.getKey(), requestBody);
-                resultMap.put(entry.getKey(), body.build());
-            }
-        }
-        if (null != map && !map.isEmpty()) {
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                body.addFormDataPart(valueOf(entry.getKey()), entry.getValue()==null?"":valueOf(entry.getValue()));
-                resultMap.put(entry.getKey(), body.build());
-            }
-        }
-        return resultMap;
     }
 
 }
