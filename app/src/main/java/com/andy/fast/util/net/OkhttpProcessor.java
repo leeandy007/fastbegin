@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -193,7 +192,7 @@ public class OkhttpProcessor implements NetProcessor {
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (null != files && !files.isEmpty()) {
             for (Map.Entry<String, File> entry : files.entrySet()) {
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), entry.getValue());
+                RequestBody requestBody = RequestBody.create(MultipartBody.FORM, entry.getValue());
                 // 参数分别为， 请求key ，文件名称 ， RequestBody
                 body.addFormDataPart("file", entry.getKey(), requestBody);
             }
