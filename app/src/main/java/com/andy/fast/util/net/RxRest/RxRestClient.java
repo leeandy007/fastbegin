@@ -86,7 +86,7 @@ public class RxRestClient {
             resultMap.put(entry.getKey(), part.body());
         }
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            RequestBody body = RequestBody.create(MediaType.parse("text/plain"), entry.getValue()==null?"":valueOf(entry.getValue()));
+            RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), entry.getValue()==null?"":valueOf(entry.getValue()));
             resultMap.put(entry.getKey(), body);
         }
         Observable<String> call = service.uploadMore(url, resultMap);
