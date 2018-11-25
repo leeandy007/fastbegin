@@ -81,11 +81,13 @@ public class RxRestClient {
             }
         }
         for (Map.Entry<String, File> entry : files.entrySet()) {
+            MultipartBody.Builder mBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
             RequestBody body = RequestBody.create(MultipartBody.FORM, entry.getValue());
-            resultMap.put(entry.getKey(), body);
+            mBody.addFormDataPart("file", entry.getKey(), body);
+            resultMap.put(entry.getKey(), mBody.build());
         }
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            RequestBody body = RequestBody.create(MediaType.parse("text/plain"), entry.getValue()==null?"":valueOf(entry.getValue()));
+            RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), entry.getValue()==null?"":valueOf(entry.getValue()));
             resultMap.put(entry.getKey(), body);
         }
         Observable<String> call = service.uploadMore(url, resultMap);
