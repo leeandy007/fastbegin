@@ -41,12 +41,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
 
     protected GestureDetector gestureDetector;
 
-    protected TouchInsideLinstener mTouchInsideLinstener;
-
-    public interface TouchInsideLinstener{
-        void touch(MotionEvent ev);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +142,7 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int width = ViewUtil.screenWidth(_context);
         if(ev.getX() > 50 || Math.abs(ev.getX()-width) > 50){
-            mTouchInsideLinstener.touch(ev);
+            insideTouch(ev);
             return super.dispatchTouchEvent(ev);
         } else {
             return onTouchEvent(ev);
@@ -196,5 +190,7 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
                 break;
         }
     }
+
+    protected void insideTouch(MotionEvent ev){};
 
 }
