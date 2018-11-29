@@ -5,16 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 import com.andy.fast.R;
 import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
 import com.andy.fast.util.ToastUtil;
+import com.andy.fast.util.ViewUtil;
 import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.view.Gravity.LEFT;
+import static android.view.Gravity.RIGHT;
 
 public abstract class BaseActivity<V extends IView, P extends BasePresenter> extends AppCompatActivity {
 
@@ -33,11 +39,21 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
 
     protected Integer page = 1;
 
+    protected GestureDetector gestureDetector;
+
+    protected TouchInsideLinstener mTouchInsideLinstener;
+
+    public interface TouchInsideLinstener{
+        void touch(MotionEvent ev);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //初始化上下文
         _context = getContext();
+        //全局手势
+        gestureDetector = new GestureDetector(_context, onGestureListener);
         //初始化布局
         setContentView(getLayout(savedInstanceState));
         //初始化交换层
@@ -124,6 +140,59 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
                 break;
             case LONG:
                 ToastUtil.obtain().Long(_context, message);
+                break;
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        int width = ViewUtil.screenWidth(_context);
+        if(ev.getX() > 50 || Math.abs(ev.getX()-width) > 50){
+            mTouchInsideLinstener.touch(ev);
+            return super.dispatchTouchEvent(ev);
+        } else {
+            return onTouchEvent(ev);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    /**
+     * 在此实例化OnGestureListener监听的实例
+     */
+    private GestureDetector.OnGestureListener onGestureListener = new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onFling(MotionEvent e1,
+                               MotionEvent e2,
+                               float velocityX,
+                               float velocityY) {
+            // e1就是初始状态的MotionEvent对象，e2就是滑动了过后的MotionEvent对象
+            // velocityX和velocityY就是滑动的速率
+            float x = e2.getX() - e1.getX();//滑动后的x值减去滑动前的x值 就是滑动的横向水平距离(x)
+            float y = e2.getY() - e1.getY();//滑动后的y值减去滑动前的y值 就是滑动的纵向垂直距离(y)
+            //如果滑动的横向距离大于100，表明是右滑了，那么就执行下面的方法
+            if (x > 100 && e1.getX() < 50) {
+                doResult(RIGHT);
+            }
+            int width = ViewUtil.screenWidth(_context);
+            //如果滑动的横向距离大于100，表明是左滑了(因为左滑为负数，所以距离大于100就是x值小于-100)
+            if (x < -100 && Math.abs(e1.getX()-width) < 50) {
+                doResult(LEFT);
+            }
+            return true;
+        }
+    };
+
+    public void doResult(int action) {
+        switch (action) {
+            case RIGHT:
+                onBackPressed();
+                break;
+            case LEFT:
+                onBackPressed();
                 break;
         }
     }
