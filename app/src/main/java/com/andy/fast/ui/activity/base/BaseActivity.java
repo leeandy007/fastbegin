@@ -141,7 +141,7 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int width = ViewUtil.screenWidth(_context);
-        if(ev.getX() > 50 || Math.abs(ev.getX()-width) > 50){
+        if(ev.getX() > 50 && Math.abs(ev.getX()-width) > 50){
             insideTouch(ev);
             return super.dispatchTouchEvent(ev);
         } else {
