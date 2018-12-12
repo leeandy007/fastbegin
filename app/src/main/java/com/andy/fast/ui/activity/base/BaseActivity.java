@@ -163,6 +163,9 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
                                MotionEvent e2,
                                float velocityX,
                                float velocityY) {
+            if(e1 == null || e2 == null){
+                return false;
+            }
             // e1就是初始状态的MotionEvent对象，e2就是滑动了过后的MotionEvent对象
             // velocityX和velocityY就是滑动的速率
             float x = e2.getX() - e1.getX();//滑动后的x值减去滑动前的x值 就是滑动的横向水平距离(x)
