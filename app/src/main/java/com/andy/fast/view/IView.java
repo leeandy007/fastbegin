@@ -1,6 +1,7 @@
 package com.andy.fast.view;
 
 import android.content.Context;
+import android.view.View;
 
 import com.andy.fast.enums.ToastMode;
 
@@ -22,5 +23,12 @@ public interface IView {
      * @param message 显示提示信息
      */
     void showToast(ToastMode mode, String message);
+
+
+    /**
+     * 点击事件处理
+     * @param view
+     */
+    void onViewClicked(View view);
 
 }
