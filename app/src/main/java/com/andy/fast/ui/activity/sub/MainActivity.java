@@ -2,6 +2,7 @@ package com.andy.fast.ui.activity.sub;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.andy.fast.R;
 import com.andy.fast.bean.DataBean;
@@ -51,6 +52,11 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public void loadView() {
+
+    }
+
+    @Override
+    public void onViewClicked(View view) {
 
     }
 
