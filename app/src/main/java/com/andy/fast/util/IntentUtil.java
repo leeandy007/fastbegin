@@ -13,37 +13,41 @@ import com.andy.fast.R;
 
 public class IntentUtil {
 
-    public enum Method{
+    public enum Method {
         GET,
         POST
     }
 
     /**
-     * @Desc 正常页面跳转
-     * @param clszz 目标页面
+     * @param clszz  目标页面
      * @param bundle 传值载体
-     * */
-    public static void startActivity(Context context, Class clszz, Bundle bundle){
+     * @Desc 正常页面跳转
+     */
+    public static void startActivity(Context context, Class clszz, Bundle bundle, String title) {
         Intent intent = new Intent(context, clszz);
-        if(bundle != null){
-            intent.putExtras(bundle);
+        if (bundle == null) {
+            bundle = new Bundle();
         }
+        bundle.putString("title", title);
+        intent.putExtras(bundle);
         context.startActivity(intent);
         animNext(context);
     }
 
     /**
-     * @Desc 带返回值跳转
-     * @param clszz 目标页面
-     * @param bundle 传值
+     * @param clszz       目标页面
+     * @param bundle      传值
      * @param requestCode 请求码
-     * */
-    public static void startActivityForResult(Context context, Class clszz, Bundle bundle, int requestCode){
+     * @Desc 带返回值跳转
+     */
+    public static void startActivityForResult(Context context, Class clszz, Bundle bundle, String title, int requestCode) {
         Intent intent = new Intent(context, clszz);
-        if(bundle != null){
-            intent.putExtras(bundle);
+        if (bundle == null) {
+            bundle = new Bundle();
         }
-        ((Activity)context).startActivityForResult(intent, requestCode);
+        bundle.putString("title", title);
+        intent.putExtras(bundle);
+        ((Activity) context).startActivityForResult(intent, requestCode);
         animNext(context);
     }
 
@@ -70,10 +74,10 @@ public class IntentUtil {
 
     /**
      * @Desc 页面跳转动画
-     * */
-    public static void animNext(Context context){
+     */
+    public static void animNext(Context context) {
         /**<<<------右入左出*/
-        ((Activity)context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 }
