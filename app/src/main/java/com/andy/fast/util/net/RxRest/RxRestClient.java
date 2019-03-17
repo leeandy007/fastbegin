@@ -1,5 +1,7 @@
 package com.andy.fast.util.net.RxRest;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +50,10 @@ public class RxRestClient {
         return request(HttpMethod.UPLOAD);
     }
 
+    public final Observable<String> postRaw(){
+        return request(HttpMethod.POST_RAW);
+    }
+
     public final Observable<ResponseBody> download(){
         return RestCreator.getRxRestService().download(URL, PARAMS);
     }
@@ -64,32 +70,39 @@ public class RxRestClient {
             case DELETE:
                 return service.delete(URL, PARAMS);
             case UPLOAD:
-                return uploadMore(service, URL, PARAMS);
+                return service.uploadMore(URL, getUploadMore(PARAMS));
+            case POST_RAW:
+                return service.postRaw(URL, getRawBody(PARAMS));
         }
         return null;
     }
 
-    public Observable<String> uploadMore(RxRestService service, String url, Map<String, Object> params) {
+    public Map<String, RequestBody> getUploadMore(Map<String, Object> map) {
         final Map<String, RequestBody> resultMap = new HashMap<>();
-        final Map<String, Object> map = new HashMap<>();
+        final Map<String, Object> params = new HashMap<>();
         final Map<String, File> files = new HashMap<>();
-        for(Map.Entry<String, Object> entry : params.entrySet()){
+        for(Map.Entry<String, Object> entry : map.entrySet()){
             if(entry.getValue() instanceof File){
                 files.put(entry.getKey(), (File)entry.getValue());
             } else {
-                map.put(entry.getKey(), entry.getValue());
+                params.put(entry.getKey(), entry.getValue());
             }
         }
         for (Map.Entry<String, File> entry : files.entrySet()) {
             RequestBody body = RequestBody.create(MultipartBody.FORM, entry.getValue());
             resultMap.put("file\"; filename=\""+entry.getKey(), body);
         }
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
             RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), entry.getValue()==null?"":valueOf(entry.getValue()));
             resultMap.put(entry.getKey(), body);
         }
-        Observable<String> call = service.uploadMore(url, resultMap);
-        return call;
+        return resultMap;
+    }
+
+    public RequestBody getRawBody(Map<String, Object> params){
+        RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
+        return requestBody;
     }
 
 }
