@@ -101,7 +101,7 @@ public class RxRestClient {
 
     public RequestBody getRawBody(Map<String, Object> params){
         RequestBody requestBody = RequestBody.create(
-                MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
+                MediaType.parse("application/json;charset=utf-8"), new Gson().toJson(params));
         return requestBody;
     }
 
