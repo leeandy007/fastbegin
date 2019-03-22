@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Created by leeandy007 on 16/9/18.
  */
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
+public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
 
     protected Context _context;
     protected List<T> _list;
     protected ViewHolderCreator mViewHolderCreator;
 
-    public BaseRecyclerAdapter(Context _context, List<T> list, ViewHolderCreator mViewHolderCreator){
+    public BaseRecyclerViewAdapter(Context _context, List<T> list, ViewHolderCreator mViewHolderCreator){
         this._context = _context;
         this._list = list;
         this.mViewHolderCreator = mViewHolderCreator;
