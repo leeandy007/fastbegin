@@ -11,6 +11,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -23,34 +24,34 @@ import retrofit2.http.Url;
 public interface RxRestService {
 
     @GET
-    Observable<String> get(@Url String url, @QueryMap Map<String, Object> params);
+    Observable<String> get(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
 
     @FormUrlEncoded
     @POST
-    Observable<String> post(@Url String url, @FieldMap Map<String, Object> params);
+    Observable<String> post(@Url String url, @HeaderMap Map<String, String> headers, @FieldMap Map<String, Object> params);
 
     @FormUrlEncoded
     @PUT
-    Observable<String> put(@Url String url, @FieldMap Map<String, Object> params);
+    Observable<String> put(@Url String url, @HeaderMap Map<String, String> headers, @FieldMap Map<String, Object> params);
 
     @DELETE
-    Observable<String> delete(@Url String url, @QueryMap Map<String, Object> params);
+    Observable<String> delete(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
 
     @Streaming
     @GET
-    Observable<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);
+    Observable<ResponseBody> download(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
 
     @Multipart
     @POST
-    Observable<String> upload(@Url String url, @Part MultipartBody.Part file);
+    Observable<String> upload(@Url String url, @HeaderMap Map<String, String> headers, @Part MultipartBody.Part file);
 
     @Multipart
     @POST
-    Observable<String> uploadMore(@Url String url, @PartMap Map<String, RequestBody> params);
+    Observable<String> uploadMore(@Url String url, @HeaderMap Map<String, String> headers, @PartMap Map<String, RequestBody> params);
 
     @POST
-    Observable<String> postRaw(@Url String url, @Body RequestBody body);
+    Observable<String> postRaw(@Url String url, @HeaderMap Map<String, String> headers, @Body RequestBody body);
 
     @PUT
-    Observable<String> putRaw(@Url String url, @Body RequestBody body);
+    Observable<String> putRaw(@Url String url, @HeaderMap Map<String, String> headers, @Body RequestBody body);
 }

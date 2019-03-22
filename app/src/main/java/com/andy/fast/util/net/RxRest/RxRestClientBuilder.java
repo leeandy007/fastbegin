@@ -6,6 +6,8 @@ public class RxRestClientBuilder {
 
     private String mUrl;
 
+    private Map<String, String> mHeaders;
+
     private Map<String, Object> mParams;
 
     RxRestClientBuilder() {
@@ -16,12 +18,17 @@ public class RxRestClientBuilder {
         return this;
     }
 
+    public final RxRestClientBuilder headers(Map<String, String> headers){
+        this.mHeaders = headers;
+        return this;
+    }
+
     public final RxRestClientBuilder params(Map<String, Object> param){
         this.mParams = param;
         return this;
     }
 
     public final RxRestClient build(){
-        return new RxRestClient(mUrl, mParams);
+        return new RxRestClient(mUrl, mHeaders, mParams);
     }
 }

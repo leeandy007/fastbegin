@@ -18,11 +18,15 @@ public class RxRestClient {
 
     private final String URL;
 
+    private final Map<String, String> HEADERS;
+
     private final Map<String, Object> PARAMS;
 
     public RxRestClient(String url,
+                        Map<String, String> headers,
                         Map<String, Object> params) {
         this.URL = url;
+        this.HEADERS = headers;
         this.PARAMS = params;
     }
 
@@ -55,24 +59,24 @@ public class RxRestClient {
     }
 
     public final Observable<ResponseBody> download(){
-        return RestCreator.getRxRestService().download(URL, PARAMS);
+        return RestCreator.getRxRestService().download(URL, HEADERS, PARAMS);
     }
 
     private Observable<String> request(HttpMethod method){
         final RxRestService service = RestCreator.getRxRestService();
         switch (method) {
             case GET:
-                return service.get(URL, PARAMS);
+                return service.get(URL, HEADERS, PARAMS);
             case POST:
-                return service.post(URL, PARAMS);
+                return service.post(URL, HEADERS, PARAMS);
             case PUT:
-                return service.put(URL, PARAMS);
+                return service.put(URL, HEADERS, PARAMS);
             case DELETE:
-                return service.delete(URL, PARAMS);
+                return service.delete(URL, HEADERS, PARAMS);
             case UPLOAD:
-                return service.uploadMore(URL, getUploadMore(PARAMS));
+                return service.uploadMore(URL, HEADERS, getUploadMore(PARAMS));
             case POST_RAW:
-                return service.postRaw(URL, getRawBody(PARAMS));
+                return service.postRaw(URL, HEADERS, getRawBody(PARAMS));
         }
         return null;
     }

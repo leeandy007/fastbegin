@@ -16,20 +16,18 @@ public class PageUtil {
         /**
          * 初始化RecyclerView的适配器
          * @param context 上下文
-         * @param list 数据
          * @return 返回RecyclerView的适配器
          */
-        BaseRecyclerAdapter createAdapter(Context context, List list);
+        BaseRecyclerAdapter createAdapter(Context context);
     }
 
     public interface PageListener{
         /**
          * 初始化listView的适配器
          * @param context 上下文
-         * @param list 数据
          * @return 返回listView的适配器
          */
-        BaseInfoAdapter createAdapter(Context context, List list);
+        BaseInfoAdapter createAdapter(Context context);
     }
 
     /**
@@ -44,7 +42,7 @@ public class PageUtil {
         if (page == 1) {
             if (!StringUtil.isEmpty(list)) {
                 if (null == adapter) {
-                    adapter = listener.createAdapter(context, list);
+                    adapter = listener.createAdapter(context);
                     recyclerView.setAdapter(adapter);
                 } else {
                     adapter.clearAll();
@@ -75,7 +73,7 @@ public class PageUtil {
         if (page == 1) {
             if (!StringUtil.isEmpty(list)) {
                 if (null == adapter) {
-                    adapter = listener.createAdapter(context, list);
+                    adapter = listener.createAdapter(context);
                     listView.setAdapter(adapter);
                 } else {
                     adapter.clearAll();
