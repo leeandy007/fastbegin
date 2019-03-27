@@ -1,7 +1,6 @@
 package com.andy.fast.ui.adapter.base;
 
 import android.content.Context;
-
 import android.view.View;
 
 import com.andy.fast.util.bus.Bus;

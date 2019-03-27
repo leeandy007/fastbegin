@@ -6,10 +6,8 @@ import android.view.View;
 
 import com.andy.fast.R;
 import com.andy.fast.bean.DataBean;
-import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.sub.MainPresenter;
 import com.andy.fast.ui.activity.base.BaseActivity;
-import com.andy.fast.util.ToastUtil;
 import com.andy.fast.view.activity.MainView;
 
 import java.util.HashMap;
@@ -52,6 +50,11 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     @Override
     public void loadView() {
+
+    }
+
+    @Override
+    public void hideView() {
 
     }
 
