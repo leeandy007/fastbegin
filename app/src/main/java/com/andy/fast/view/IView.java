@@ -19,6 +19,11 @@ public interface IView {
     void loadView();
 
     /**
+     * 关闭加载等待
+     */
+    void hideView();
+
+    /**
      * @param mode 显示模式
      * @param message 显示提示信息
      */
