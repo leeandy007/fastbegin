@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 public class ViewUtil {
@@ -16,7 +17,18 @@ public class ViewUtil {
      * @return
      */
     public static View createView(Context context, int layoutId){
-        return View.inflate(context, layoutId, null);
+        return createView(context, layoutId, null);
+    }
+
+    /**
+     * 创建View
+     * @param context
+     * @param layoutId
+     * @param viewGroup
+     * @return
+     */
+    public static View createView(Context context, int layoutId, ViewGroup viewGroup){
+        return View.inflate(context, layoutId, viewGroup);
     }
 
     /**
