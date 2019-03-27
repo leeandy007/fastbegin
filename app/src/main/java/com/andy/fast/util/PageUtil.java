@@ -11,21 +11,21 @@ import java.util.List;
 
 public class PageUtil {
 
-    public interface PageRecyclerListener{
+    public interface PageRecyclerListener<T extends BaseRecyclerViewAdapter>{
 
         /**
          * 初始化RecyclerView的适配器
          * @return 返回RecyclerView的适配器
          */
-        BaseRecyclerViewAdapter createAdapter();
+        T createAdapter();
     }
 
-    public interface PageListener{
+    public interface PageListener<T extends BaseInfoAdapter>{
         /**
          * 初始化listView的适配器
          * @return 返回listView的适配器
          */
-        BaseInfoAdapter createAdapter();
+        T createAdapter();
     }
 
     /**
