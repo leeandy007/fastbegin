@@ -52,7 +52,6 @@ public class PageUtil {
                 }
                 ToastUtil.obtain().Short(context,"暂无数据");
             }
-
         } else {
             if (!StringUtil.isEmpty(list)) {
                 adapter.add(list);
@@ -86,7 +85,6 @@ public class PageUtil {
                 }
                 ToastUtil.obtain().Short(context,"暂无数据");
             }
-
         } else {
             if (!StringUtil.isEmpty(list)) {
                 adapter.add(list);
