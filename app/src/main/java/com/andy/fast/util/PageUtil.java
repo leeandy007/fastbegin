@@ -47,6 +47,9 @@ public class PageUtil {
                     adapter.add(list);
                 }
             } else {
+                if(null != adapter){
+                    adapter.clearAll();
+                }
                 ToastUtil.obtain().Short(context,"暂无数据");
             }
 
@@ -78,6 +81,9 @@ public class PageUtil {
                     adapter.add(list);
                 }
             } else {
+                if(null != adapter){
+                    adapter.clearAll();
+                }
                 ToastUtil.obtain().Short(context,"暂无数据");
             }
 
