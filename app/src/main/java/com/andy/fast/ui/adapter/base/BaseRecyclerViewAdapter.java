@@ -39,6 +39,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return _list.get(position);
     }
 
+    @Override
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
+        holder.initData(_context, getItem(position), position);
+    }
+
     public void replaceBean(int position , T t){
         _list.set(position, t);
         this.notifyDataSetChanged();
@@ -61,11 +66,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void refresh(){
         this.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
-        holder.initData(_context, getItem(position), position);
     }
 
 }

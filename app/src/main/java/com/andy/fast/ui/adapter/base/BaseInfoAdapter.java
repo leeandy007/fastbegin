@@ -20,7 +20,6 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 	public BaseInfoAdapter(List<T> list, ViewHolderCreator mViewHolderCreator) {
 		this._list = list;
 		this.mViewHolderCreator = mViewHolderCreator;
-
 	}
 	
 	public List<T> getList() {
@@ -31,33 +30,9 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 	public int getCount() {
 		return _list.size();
 	}
-	
-	public void replaceBean(int position , T t){
-		_list.set(position, t);
-		this.notifyDataSetChanged();
-	}
-	
-	public void deleteItem(int position) {
-		_list.remove(position);
-		this.notifyDataSetChanged();
-	}
-	
-	public void clearAll() {
-		_list.clear();
-		this.notifyDataSetChanged();
-	}
 
-	public void add(List<T> beans) {
-		_list.addAll(beans);
-		this.notifyDataSetChanged();
-	}
-	
-	public void refresh(){
-		this.notifyDataSetChanged();
-	}
-	
 	@Override
-	public Object getItem(int position) {
+	public T getItem(int position) {
 		return _list.get(position);
 	}
 
@@ -79,6 +54,30 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 		}
 		holder.initData(parent.getContext(), getItem(position), position);
 		return convertView;
+	}
+
+	public void replaceBean(int position , T t){
+		_list.set(position, t);
+		this.notifyDataSetChanged();
+	}
+
+	public void deleteItem(int position) {
+		_list.remove(position);
+		this.notifyDataSetChanged();
+	}
+
+	public void clearAll() {
+		_list.clear();
+		this.notifyDataSetChanged();
+	}
+
+	public void add(List<T> beans) {
+		_list.addAll(beans);
+		this.notifyDataSetChanged();
+	}
+
+	public void refresh(){
+		this.notifyDataSetChanged();
 	}
 
 }

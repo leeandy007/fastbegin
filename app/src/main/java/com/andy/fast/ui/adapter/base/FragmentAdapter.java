@@ -8,50 +8,67 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter<T extends Fragment> extends FragmentPagerAdapter {
 
 	protected Context context;
-	protected List<Fragment> list;
+	protected List<T> _list;
 	protected FragmentManager fm;
 	
-	public FragmentAdapter(FragmentManager fm , Context context, List<Fragment> list) {
+	public FragmentAdapter(FragmentManager fm , Context context, List<T> list) {
 		super(fm);
 		this.fm = fm;
 		this.context = context;
-		this.list = list;
+		this._list = list;
 	}
 	
 
 	@Override
-	public Fragment getItem(int position) {
-		return list.get(position);
+	public T getItem(int position) {
+		return _list.get(position);
 	}
 
 	@Override
 	public int getCount() {
-		return list.size();
+		return _list.size();
 	}
-
 
 	/**
 	 * 隐藏fragment
 	 * */
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		Fragment fragment = getItem(position);
-		fm.beginTransaction().hide(fragment).commitAllowingStateLoss();
+		T t = getItem(position);
+		fm.beginTransaction().hide(t).commitAllowingStateLoss();
 	}
 
 	/**
 	 * 显示fragment
 	 * */
 	@Override
-	public Fragment instantiateItem(ViewGroup container, int position) {
-		Fragment fragment =  (Fragment) super.instantiateItem(container, position);
-		fm.beginTransaction().show(fragment).commitAllowingStateLoss();
-		return fragment;
+	public T instantiateItem(ViewGroup container, int position) {
+		T t =  (T) super.instantiateItem(container, position);
+		fm.beginTransaction().show(t).commitAllowingStateLoss();
+		return t;
 	}
-	
-	
+
+    public void deleteItem(int position) {
+		_list.remove(position);
+        this.notifyDataSetChanged();
+    }
+
+    public void add(List<T> beans) {
+		_list.addAll(beans);
+        this.notifyDataSetChanged();
+    }
+
+    public void replaceBean(int position , T t){
+		_list.set(position, t);
+        this.notifyDataSetChanged();
+    }
+
+    public void clearAll() {
+		_list.clear();
+        this.notifyDataSetChanged();
+    }
 
 }
