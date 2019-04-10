@@ -88,33 +88,95 @@ public class StringUtil {
 		return s;
 	}
 
-	/**
-	 * 把String按分隔符转换为List<String>
-	 *
-	 * @param str
-	 *            字符串
-	 * @param split
-	 *            分隔符
-	 * @return
-	 */
-	public static List<String> StringToListString(String str, String split) {
-		List<String> list = new ArrayList<String>();
-		if (!StringUtil.isEmpty(str)) {
-			String[] strs = str.split(split);
-			for (String string : strs) {
-				list.add(string);
-			}
-		}
-
-		return list;
-	}
-
 	public static String[] split(String str, String split){
 		String[] string = null;
 		if(!StringUtil.isEmpty(str)){
 			string = str.split(split);
 		}
 		return string;
+	}
+
+	/**
+	 * 拆分String,以xx号分隔，并封装成 ArrayList<String> 不使用超类List，以减少内存开销
+	 * @param split 分隔符
+	 * @param value 字符串
+	 * @return ArrayList<String>
+	 */
+	public static ArrayList<String> getSListFromString(String split, String value) {
+		if (!isEmpty(value)) {
+			ArrayList<String> list = new ArrayList<>();
+			if (value.split(split) == null) {
+				list.add(value);
+			} else {
+				String[] values = value.split(split);
+				for (String s : values) {
+					list.add(s);
+				}
+			}
+			return list;
+		}
+		return null;
+	}
+
+	/**
+	 * 拆分String,以xx号分隔，并封装成 ArrayList<Integer> 不使用超类List，以减少内存开销
+	 * @param split 分隔符
+	 * @param value 字符串
+	 * @return ArrayList<Integer>
+	 */
+	public static ArrayList<Integer> getIListFromString(String split, String value) {
+		if (!isEmpty(value)) {
+			ArrayList<Integer> list = new ArrayList<>();
+			if (value.split(split) == null) {
+				list.add(Integer.valueOf(value));
+			} else {
+				String[] values = value.split(split);
+				for (String s : values) {
+					list.add(Integer.valueOf(s));
+				}
+			}
+			return list;
+		}
+		return null;
+	}
+
+
+	/**
+	 * 拆分Collection<String>,以xx号分隔，并封装成制定分隔符的String
+	 * @param split 分隔符
+	 * @param collection 集合
+	 * @return 字符串
+	 */
+	public static String getStringFromSList(String split, Collection<String> collection) {
+		String result = "";
+		if (collection != null && !collection.isEmpty()) {
+			Iterator<String> it = collection.iterator();
+			while (it.hasNext()) {
+				String s = it.next();
+				result = result + split + s;
+			}
+			result = result.substring(1);
+		}
+		return result;
+	}
+
+	/**
+	 * 拆分Collection<Integer>,以xx号分隔，并封装成制定分隔符的String
+	 * @param split 分隔符
+	 * @param collection 集合
+	 * @return 字符串
+	 */
+	public static String getStringFromIList(String split, Collection<Integer> collection) {
+		String result = "";
+		if (collection != null && !collection.isEmpty()) {
+			Iterator<Integer> it = collection.iterator();
+			while (it.hasNext()) {
+				String s = String.valueOf(it.next());
+				result = result + split + s;
+			}
+			result = result.substring(1);
+		}
+		return result;
 	}
 
 	/**
@@ -140,21 +202,7 @@ public class StringUtil {
 		return pInput.matches(regEx);
 	}
 
-	/**
-	 * 拆分Collection,以xx号分隔，并封装成制定分隔符的String
-	 */
-	public static String getCollectionToString(Collection<String> collection, String split) {
-		String result = "";
-		if (collection != null && !collection.isEmpty()) {
-			Iterator<String> it = collection.iterator();
-			while (it.hasNext()) {
-				String s = it.next();
-				result = result + split + s;
-			}
-			result = result.substring(1);
-		}
-		return result;
-	}
+
 
 	private final static Pattern emailer = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 
