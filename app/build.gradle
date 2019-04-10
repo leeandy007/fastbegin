@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 28
@@ -86,5 +87,7 @@ dependencies {
 
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    implementation 'org.greenrobot:greendao:3.2.0'
 
 }

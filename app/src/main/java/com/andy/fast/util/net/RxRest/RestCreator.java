@@ -3,8 +3,10 @@ package com.andy.fast.util.net.RxRest;
 import com.andy.fast.util.net.config.ConfigKeys;
 import com.andy.fast.util.net.config.NetConfig;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -19,16 +21,23 @@ public class RestCreator {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OKHttpHolder.OKHTTP_CLIENT)
+                .client(OKHttpHolder.getClient())
                 .build();
     }
 
     private static final class OKHttpHolder{
+        private static final ArrayList<Interceptor> INTERCEPTORS = NetConfig.getConfiguration(ConfigKeys.INTERCEPTOR);
         private static final int TIME_OUT = 60;
         //创建全局的OKHttp客户端
-        private static final OkHttpClient OKHTTP_CLIENT = new OkHttpClient.Builder()
-                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .build();
+        private static final OkHttpClient getClient(){
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
+            for (Interceptor interceptor : INTERCEPTORS) {
+                builder.addInterceptor(interceptor);
+            }
+            return builder.build();
+        }
+
     }
 
     //提供接口让调用者得到retrofit对象

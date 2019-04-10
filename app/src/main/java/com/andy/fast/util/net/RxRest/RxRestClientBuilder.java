@@ -1,5 +1,7 @@
 package com.andy.fast.util.net.RxRest;
 
+import com.andy.fast.util.net.listener.UploadProgressListener;
+
 import java.util.Map;
 
 public class RxRestClientBuilder {
@@ -9,6 +11,8 @@ public class RxRestClientBuilder {
     private Map<String, String> mHeaders;
 
     private Map<String, Object> mParams;
+
+    private UploadProgressListener mUploadProgressListener;
 
     RxRestClientBuilder() {
     }
@@ -28,7 +32,12 @@ public class RxRestClientBuilder {
         return this;
     }
 
+    public final RxRestClientBuilder uploadListener(UploadProgressListener uploadProgressListener){
+        this.mUploadProgressListener = uploadProgressListener;
+        return this;
+    }
+
     public final RxRestClient build(){
-        return new RxRestClient(mUrl, mHeaders, mParams);
+        return new RxRestClient(mUrl, mHeaders, mParams, mUploadProgressListener);
     }
 }

@@ -1,5 +1,8 @@
 package com.andy.fast.util.net.RxRest;
 
+import com.andy.fast.enums.HttpMethod;
+import com.andy.fast.util.net.body.UploadRequestBody;
+import com.andy.fast.util.net.listener.UploadProgressListener;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -22,12 +25,16 @@ public class RxRestClient {
 
     private final Map<String, Object> PARAMS;
 
+    private final UploadProgressListener uploadProgressListener;
+
     public RxRestClient(String url,
                         Map<String, String> headers,
-                        Map<String, Object> params) {
+                        Map<String, Object> params,
+                        UploadProgressListener uploadProgressListener) {
         this.URL = url;
         this.HEADERS = headers;
         this.PARAMS = params;
+        this.uploadProgressListener = uploadProgressListener;
     }
 
     public static RxRestClientBuilder create(){
@@ -58,8 +65,12 @@ public class RxRestClient {
         return request(HttpMethod.POST_RAW);
     }
 
+    public final Observable<String> uploadProgress(){
+        return request(HttpMethod.UPLOAD_PROGRESS);
+    }
+
     public final Observable<ResponseBody> download(){
-        return RestCreator.getRxRestService().download(URL, HEADERS, PARAMS);
+        return RestCreator.getRxRestService().download(URL, HEADERS);
     }
 
     private Observable<String> request(HttpMethod method){
@@ -75,13 +86,15 @@ public class RxRestClient {
                 return service.delete(URL, HEADERS, PARAMS);
             case UPLOAD:
                 return service.uploadMore(URL, HEADERS, getUploadMore(PARAMS));
+            case UPLOAD_PROGRESS:
+                return service.uploadMore(URL, HEADERS, getUploadProgress(PARAMS));
             case POST_RAW:
                 return service.postRaw(URL, HEADERS, getRawBody(PARAMS));
         }
         return null;
     }
 
-    public Map<String, RequestBody> getUploadMore(Map<String, Object> map) {
+    private Map<String, RequestBody> getUploadMore(Map<String, Object> map) {
         final Map<String, RequestBody> resultMap = new HashMap<>();
         final Map<String, Object> params = new HashMap<>();
         final Map<String, File> files = new HashMap<>();
@@ -103,10 +116,32 @@ public class RxRestClient {
         return resultMap;
     }
 
-    public RequestBody getRawBody(Map<String, Object> params){
+    private RequestBody getRawBody(Map<String, Object> params){
         RequestBody requestBody = RequestBody.create(
                 MediaType.parse("application/json;charset=utf-8"), new Gson().toJson(params));
         return requestBody;
+    }
+
+    private Map<String, RequestBody> getUploadProgress(Map<String, Object> map) {
+        final Map<String, RequestBody> resultMap = new HashMap<>();
+        final Map<String, Object> params = new HashMap<>();
+        final Map<String, File> files = new HashMap<>();
+        for(Map.Entry<String, Object> entry : map.entrySet()){
+            if(entry.getValue() instanceof File){
+                files.put(entry.getKey(), (File)entry.getValue());
+            } else {
+                params.put(entry.getKey(), entry.getValue());
+            }
+        }
+        for (Map.Entry<String, File> entry : files.entrySet()) {
+            UploadRequestBody body = new UploadRequestBody(RequestBody.create(MultipartBody.FORM, entry.getValue()), this.uploadProgressListener);
+            resultMap.put("file\"; filename=\""+entry.getKey(), body);
+        }
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), entry.getValue()==null?"":valueOf(entry.getValue()));
+            resultMap.put(entry.getKey(), body);
+        }
+        return resultMap;
     }
 
 }

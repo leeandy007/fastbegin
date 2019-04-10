@@ -39,7 +39,7 @@ public interface RxRestService {
 
     @Streaming
     @GET
-    Observable<ResponseBody> download(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
+    Observable<ResponseBody> download(@Url String url, @HeaderMap Map<String, String> headers);
 
     @Multipart
     @POST

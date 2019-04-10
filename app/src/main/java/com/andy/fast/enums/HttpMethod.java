@@ -1,4 +1,4 @@
-package com.andy.fast.util.net.RxRest;
+package com.andy.fast.enums;
 
 public enum HttpMethod {
     GET,
@@ -8,6 +8,7 @@ public enum HttpMethod {
     PUT_RAW,
     DELETE,
     UPLOAD,
-    DOWNLOAD
+    DOWNLOAD,
+    UPLOAD_PROGRESS
 
 }
