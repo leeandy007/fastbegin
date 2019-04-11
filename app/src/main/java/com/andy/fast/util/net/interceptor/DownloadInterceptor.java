@@ -1,7 +1,7 @@
 package com.andy.fast.util.net.interceptor;
 
-import com.andy.fast.util.net.listener.DownloadProgressListener;
 import com.andy.fast.util.net.body.DownloadResponseBody;
+import com.andy.fast.util.net.listener.DownloadProgressListener;
 
 import java.io.IOException;
 

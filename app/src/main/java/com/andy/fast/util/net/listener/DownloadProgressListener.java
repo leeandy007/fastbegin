@@ -4,10 +4,10 @@ public interface DownloadProgressListener {
 
     /**
      * 下载进度
-     * @param currentCount
-     * @param totalCount
+     * @param currentLength
+     * @param totalLength
      * @param done
      */
-    void onProgress(long currentCount, long totalCount, boolean done);
+    void onProgress(long currentLength, long totalLength, boolean done);
 
 }

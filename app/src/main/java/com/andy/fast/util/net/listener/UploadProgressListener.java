@@ -4,9 +4,9 @@ public interface UploadProgressListener {
 
     /**
      * 上传进度
-     * @param currentCount
-     * @param totalCount
+     * @param currentLength
+     * @param totalLength
      */
-    void onProgress(long currentCount, long totalCount);
+    void onProgress(long currentLength, long totalLength);
 
 }

@@ -20,17 +20,17 @@ public abstract class DownloadListener<Result> {
 
     /**
      * 下载进度
-     * @param readLength
-     * @param countLength
+     * @param currentLength
+     * @param totalLength
      */
-    public abstract void onProgress(long readLength, long countLength);
+    public abstract void onProgress(long currentLength, long totalLength);
 
     /**
      * 失败或者错误方法
      * 主动调用，更加灵活
      * @param t
      */
-    public  void onError(Throwable t){
+    public void onError(Throwable t){
 
     }
 

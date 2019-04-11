@@ -31,7 +31,7 @@ public class Configurator {
         checkConfiguration();
         final Object value = CONFIGS.get(key);
         if(value == null){
-            throw new NullPointerException(key.toString() + "IS NULL");
+            throw new NullPointerException(key.toString() + " IS NULL");
         }
         return (T) value;
     }
@@ -44,6 +44,9 @@ public class Configurator {
 
     //配置拦截器
     public final Configurator setInterceptors(ArrayList<Interceptor> interceptors){
+        if(interceptors == null){
+            interceptors = new ArrayList<>();
+        }
         INTERCEPTORS.addAll(interceptors);
         CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
         return this;

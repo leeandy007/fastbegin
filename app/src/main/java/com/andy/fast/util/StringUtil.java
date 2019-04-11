@@ -122,6 +122,22 @@ public class StringUtil {
 		return string;
 	}
 
+	public static ArrayList<String> getStringList(String value){
+		return getSListFromString(",", value);
+	}
+
+	public static ArrayList<Integer> getIntegerList(String value){
+		return getIListFromString(",", value);
+	}
+
+	public static String strListToString(Collection<String> collection){
+		return getStringFromSList(",", collection);
+	}
+
+	public static String intListToString(Collection<Integer> collection){
+		return getStringFromIList(",", collection);
+	}
+
 	/**
 	 * 拆分String,以xx号分隔，并封装成 ArrayList<String> 不使用超类List，以减少内存开销
 	 * @param split 分隔符
@@ -135,7 +151,6 @@ public class StringUtil {
 			for (String string : values) {
 				list.add(string);
 			}
-			return list;
 		}
 		return list;
 	}
@@ -153,11 +168,9 @@ public class StringUtil {
 			for (String s : values) {
 				list.add(Integer.valueOf(s));
 			}
-			return list;
 		}
 		return list;
 	}
-
 
 	/**
 	 * 拆分Collection<String>,以xx号分隔，并封装成制定分隔符的String
@@ -233,6 +246,20 @@ public class StringUtil {
 		if(email == null || email.trim().length()==0)
 			return false;
 		return emailer.matcher(email).matches();
+	}
+
+	public static String getBasUrl(String url) {
+		String head = "";
+		int index = url.indexOf("://");
+		if (index != -1) {
+			head = url.substring(0, index + 3);
+			url = url.substring(index + 3);
+		}
+		index = url.indexOf("/");
+		if (index != -1) {
+			url = url.substring(0, index + 1);
+		}
+		return head + url;
 	}
 
 }
