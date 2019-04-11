@@ -32,8 +32,10 @@ public class RestCreator {
         private static final OkHttpClient getClient(){
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
-            for (Interceptor interceptor : INTERCEPTORS) {
-                builder.addInterceptor(interceptor);
+            if(INTERCEPTORS != null){
+                for (Interceptor interceptor : INTERCEPTORS) {
+                    builder.addInterceptor(interceptor);
+                }
             }
             return builder.build();
         }
