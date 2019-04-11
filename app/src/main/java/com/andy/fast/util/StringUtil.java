@@ -24,6 +24,19 @@ public class StringUtil {
 	}
 
 	/**
+	 * 判断Integer是否为null
+	 *
+	 * @param i
+	 * @return null true
+	 */
+	public static boolean isEmpty(Integer i) {
+		if (null != i && i != 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * 判断字符串是否为null
 	 *
 	 * @param str
@@ -44,6 +57,19 @@ public class StringUtil {
 	 */
 	public static boolean isEmpty(List<?> list) {
 		if (null != list && list.size() != 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 判断数组是否为null
+	 *
+	 * @param objects
+	 * @return null true
+	 */
+	public static boolean isEmpty(Object[] objects) {
+		if (null != objects && objects.length != 0) {
 			return false;
 		}
 		return true;
@@ -105,13 +131,9 @@ public class StringUtil {
 	public static ArrayList<String> getSListFromString(String split, String value) {
 		if (!isEmpty(value)) {
 			ArrayList<String> list = new ArrayList<>();
-			if (value.split(split) == null) {
-				list.add(value);
-			} else {
-				String[] values = value.split(split);
-				for (String s : values) {
-					list.add(s);
-				}
+			String[] values = value.split(split);
+			for (String string : values) {
+				list.add(string);
 			}
 			return list;
 		}
@@ -127,13 +149,9 @@ public class StringUtil {
 	public static ArrayList<Integer> getIListFromString(String split, String value) {
 		if (!isEmpty(value)) {
 			ArrayList<Integer> list = new ArrayList<>();
-			if (value.split(split) == null) {
-				list.add(Integer.valueOf(value));
-			} else {
-				String[] values = value.split(split);
-				for (String s : values) {
-					list.add(Integer.valueOf(s));
-				}
+			String[] values = value.split(split);
+			for (String s : values) {
+				list.add(Integer.valueOf(s));
 			}
 			return list;
 		}
