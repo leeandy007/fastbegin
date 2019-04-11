@@ -129,15 +129,15 @@ public class StringUtil {
 	 * @return ArrayList<String>
 	 */
 	public static ArrayList<String> getSListFromString(String split, String value) {
+		ArrayList<String> list = new ArrayList<>();
 		if (!isEmpty(value)) {
-			ArrayList<String> list = new ArrayList<>();
 			String[] values = value.split(split);
 			for (String string : values) {
 				list.add(string);
 			}
 			return list;
 		}
-		return null;
+		return list;
 	}
 
 	/**
@@ -147,15 +147,15 @@ public class StringUtil {
 	 * @return ArrayList<Integer>
 	 */
 	public static ArrayList<Integer> getIListFromString(String split, String value) {
+		ArrayList<Integer> list = new ArrayList<>();
 		if (!isEmpty(value)) {
-			ArrayList<Integer> list = new ArrayList<>();
 			String[] values = value.split(split);
 			for (String s : values) {
 				list.add(Integer.valueOf(s));
 			}
 			return list;
 		}
-		return null;
+		return list;
 	}
 
 
