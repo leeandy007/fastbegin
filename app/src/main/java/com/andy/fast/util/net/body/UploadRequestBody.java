@@ -35,6 +35,11 @@ public class UploadRequestBody extends RequestBody {
     }
 
     @Override
+    public long contentLength() throws IOException {
+        return requestBody.contentLength();
+    }
+
+    @Override
     public void writeTo(BufferedSink sink) throws IOException {
         if (null == bufferedSink) {
             bufferedSink = Okio.buffer(sink(sink));
