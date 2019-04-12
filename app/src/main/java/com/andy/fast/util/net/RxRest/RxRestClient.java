@@ -134,7 +134,7 @@ public class RxRestClient {
             }
         }
         for (Map.Entry<String, File> entry : files.entrySet()) {
-            UploadRequestBody body = new UploadRequestBody(RequestBody.create(MultipartBody.FORM, entry.getValue()), this.uploadProgressListener);
+            UploadRequestBody body = new UploadRequestBody(entry.getValue(), this.uploadProgressListener);
             resultMap.put("file\"; filename=\""+entry.getKey(), body);
         }
         for (Map.Entry<String, Object> entry : params.entrySet()) {

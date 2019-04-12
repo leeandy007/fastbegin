@@ -1,5 +1,7 @@
 package com.andy.fast.util.net.listener;
 
+import java.io.File;
+
 public interface UploadProgressListener {
 
     /**
@@ -7,6 +9,6 @@ public interface UploadProgressListener {
      * @param currentLength
      * @param totalLength
      */
-    void onProgress(long currentLength, long totalLength);
+    void onProgress(long currentLength, long totalLength, File file);
 
 }
