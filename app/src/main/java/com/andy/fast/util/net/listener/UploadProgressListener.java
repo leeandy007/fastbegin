@@ -9,6 +9,6 @@ public interface UploadProgressListener {
      * @param currentLength
      * @param totalLength
      */
-    void onProgress(long currentLength, long totalLength, File file);
+    void onProgress(long currentLength, long totalLength, String fileName);
 
 }

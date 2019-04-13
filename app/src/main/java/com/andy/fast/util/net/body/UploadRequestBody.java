@@ -79,7 +79,7 @@ public class UploadRequestBody extends RequestBody {
                             @Override
                             public void accept(Long result) {
                                 if(uploadProgressListener != null){
-                                    uploadProgressListener.onProgress(currentLength, totalLength, file);
+                                    uploadProgressListener.onProgress(currentLength, totalLength, file.getName());
                                 }
                             }
                         });
