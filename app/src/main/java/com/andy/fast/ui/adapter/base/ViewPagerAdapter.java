@@ -2,7 +2,7 @@ package com.andy.fast.ui.adapter.base;
 
 import android.content.Context;
 import android.os.Parcelable;
-import androidx.viewpager.widget.PagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 

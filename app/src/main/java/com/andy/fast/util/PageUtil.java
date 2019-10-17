@@ -1,7 +1,7 @@
 package com.andy.fast.util;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import com.andy.fast.ui.adapter.base.BaseInfoAdapter;

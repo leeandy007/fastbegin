@@ -3,7 +3,7 @@ package com.andy.fast.widget;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import androidx.appcompat.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
 
