@@ -3,40 +3,40 @@ package com.andy.fast.ui.adapter.base;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andy.fast.util.bus.Bus;
+
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 
 public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
-	protected List<T> list;
-	protected View view;
+	protected List<T> _list;
 	protected Context context;
-	protected int resId;
-
-	public ViewPagerAdapter(List<T> list) {
-		this.list = list;
-	}
+	protected OnItemClickLitener<T> mOnItemClickLitener;
 	
-	public ViewPagerAdapter(Context context, List<T> list, int resId) {
+	public ViewPagerAdapter(Context context, List<T> list, OnItemClickLitener<T> onItemClickLitener) {
 		this.context = context;
-		this.list = list;
-		this.resId = resId;
+		this._list = list;
+		this.mOnItemClickLitener = onItemClickLitener;
 	}
 	
 	public List<T> getList() {
-		return list;
+		return _list;
 	}
 	
-	public Object getItem(int position) {
-		return list.get(position);
+	public T getItem(int position) {
+		return _list.get(position);
 	}
 	
 	@Override
 	public int getCount() {
-		return list.size();
+		return _list.size();
 	}
 
 	@Override
@@ -66,23 +66,37 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
 	@Override
 	public void destroyItem(ViewGroup viewGroup, int position, Object object) {
-		removeItem(viewGroup, position, object);
+		viewGroup.removeView((View) object);
 	}
-	
-	/**
-	 * 销毁View
-	 * */
-	public abstract void removeItem(ViewGroup viewGroup, int position, Object object);
 	
 	@Override
-	public Object instantiateItem(ViewGroup viewGroup, int position) {
-		return dealView(context, list, resId, position, viewGroup, view);
+	public Object instantiateItem(ViewGroup viewGroup, final int position) {
+		final View view = CreateView(viewGroup);
+		initView(view);
+		initData(context, getItem(position), position);
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mOnItemClickLitener != null){
+					mOnItemClickLitener.onItemClick(view, getItem(position), position);
+				}
+			}
+		});
+		viewGroup.addView(view);
+		return view;
 	}
+
+	protected View CreateView(ViewGroup viewGroup){
+		View view = LayoutInflater.from(context).inflate(getLayout(), viewGroup, false);
+		ButterKnife.bind(context, view);
+		Bus.obtain().register(context);
+		return view;
+	}
+
+	public abstract int getLayout();
+
+	public void initView(View view){}
 	
-	/**
-	 * 处理业务
-	 * */
-	public abstract View dealView(Context context, List<T> list, int resId,
-								  int position, ViewGroup viewGroup, View view);
+	public abstract void initData(Context context, T t, int position);
 
 }

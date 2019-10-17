@@ -35,13 +35,13 @@ public abstract class BaseRecyclerHolder<T> extends BaseRecyclerViewHolder<T> {
     }
 
     @Override
-    public void initData(Context context, final T t, final int postion) {
+    public void initData(Context context, final T t, final int position) {
         this._context = context;
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mOnItemClickLitener != null){
-                    mOnItemClickLitener.onItemClick(v, t, postion);
+                    mOnItemClickLitener.onItemClick(v, t, position);
                 }
             }
         });
