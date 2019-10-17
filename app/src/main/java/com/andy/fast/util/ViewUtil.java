@@ -3,11 +3,19 @@ package com.andy.fast.util;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
+import com.andy.fast.R;
+import com.andy.fast.widget.DividerItemDecoration;
+import com.andy.fast.widget.MarginDecoration;
 
 public class ViewUtil {
 
@@ -92,5 +100,38 @@ public class ViewUtil {
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
     }
+
+    public enum Model{
+        VERTICAL,
+        HORIZONTAL
+    }
+
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        DividerItemDecoration dividerItemDecoration = null;
+        switch (model) {
+            case HORIZONTAL:
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                dividerItemDecoration = DividerItemDecoration.createHorizontal(context, context.getResources().getColor(R.color.gray), 1, margin);
+                break;
+            case VERTICAL:
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                dividerItemDecoration = DividerItemDecoration.createVertical(context, context.getResources().getColor(R.color.gray), 1, margin);
+                break;
+        }
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    public static void initGrid(Context context, RecyclerView recyclerView, int row){
+        recyclerView.setLayoutManager(new GridLayoutManager(context, row));
+        recyclerView.addItemDecoration(new MarginDecoration(context, R.dimen.item_margin));
+    }
+
+    public static void initStaggered(Context context, RecyclerView recyclerView, int row){
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new MarginDecoration(context, R.dimen.item_margin));
+    }
+
 
 }
