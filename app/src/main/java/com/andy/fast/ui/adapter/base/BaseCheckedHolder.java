@@ -24,12 +24,12 @@ public abstract class BaseCheckedHolder<T>{
 		return view;
 	}
 
-	public abstract int getLayout();
+	protected abstract int getLayout();
 
-	public void initView(View view) {
+	protected void initView(View view) {
 		mCheckBox = view.findViewById(checkedResId);
 	}
 
-	public abstract void initData(Context context, T t, int position, BaseCheckedAdapter<T>.CheckedBean checked);
+	protected abstract void initData(Context context, T t, int position, BaseCheckedAdapter<T>.CheckedBean checked);
 
 }

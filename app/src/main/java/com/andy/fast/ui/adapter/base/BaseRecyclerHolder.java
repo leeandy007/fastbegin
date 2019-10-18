@@ -3,8 +3,6 @@ package com.andy.fast.ui.adapter.base;
 import android.content.Context;
 import android.view.View;
 
-import com.andy.fast.util.ToastUtil;
-
 
 public abstract class BaseRecyclerHolder<T> extends BaseRecyclerViewHolder<T> {
 
@@ -12,26 +10,17 @@ public abstract class BaseRecyclerHolder<T> extends BaseRecyclerViewHolder<T> {
 
     protected Context _context;
 
-    protected OnItemClickLitener<T> mOnItemClickLitener;
+    protected OnItemClickListener<T> mOnItemClickListener;
 
-    public BaseRecyclerHolder(View view) {
+    public BaseRecyclerHolder(View view, OnItemClickListener<T> onItemClickListener) {
         super(view);
         mView = view;
-    }
-
-    public BaseRecyclerHolder(View view, OnItemClickLitener<T> onItemClickLitener) {
-        super(view);
-        mView = view;
-        mOnItemClickLitener = onItemClickLitener;
+        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
     public void initView(View view) {
         mView = view;
-    }
-
-    public void showToast(String message){
-        ToastUtil.obtain().Short(_context, message);
     }
 
     @Override
@@ -40,8 +29,8 @@ public abstract class BaseRecyclerHolder<T> extends BaseRecyclerViewHolder<T> {
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mOnItemClickLitener != null){
-                    mOnItemClickLitener.onItemClick(v, t, position);
+                if(mOnItemClickListener != null){
+                    mOnItemClickListener.onItemClick(v, t, position);
                 }
             }
         });

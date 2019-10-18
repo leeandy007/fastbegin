@@ -21,8 +21,8 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
         initView(view);
     }
 
-    public void initView(View view){}
+    protected void initView(View view){}
 
-    public abstract void initData(Context context, T t, int postion);
+    protected abstract void initData(Context context, T t, int postion);
 
 }

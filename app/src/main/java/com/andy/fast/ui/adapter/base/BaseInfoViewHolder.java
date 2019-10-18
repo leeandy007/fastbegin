@@ -20,10 +20,10 @@ public abstract class BaseInfoViewHolder<T> {
         return view;
     }
 
-    public abstract int getLayout();
+    protected abstract int getLayout();
 
-    public void initView(View view){}
+    protected void initView(View view){}
 
-    public abstract void initData(Context context, T t, int position);
+    protected abstract void initData(Context context, T t, int position);
 
 }

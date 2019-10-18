@@ -18,12 +18,12 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
 	protected List<T> _list;
 	protected Context context;
-	protected OnItemClickLitener<T> mOnItemClickLitener;
+	protected OnItemClickListener<T> mOnItemClickListener;
 	
-	public ViewPagerAdapter(Context context, List<T> list, OnItemClickLitener<T> onItemClickLitener) {
+	public ViewPagerAdapter(Context context, List<T> list, OnItemClickListener<T> onItemClickListener) {
 		this.context = context;
 		this._list = list;
-		this.mOnItemClickLitener = onItemClickLitener;
+		this.mOnItemClickListener = onItemClickListener;
 	}
 	
 	public List<T> getList() {
@@ -77,8 +77,8 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 		view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(mOnItemClickLitener != null){
-					mOnItemClickLitener.onItemClick(view, getItem(position), position);
+				if(mOnItemClickListener != null){
+					mOnItemClickListener.onItemClick(view, getItem(position), position);
 				}
 			}
 		});
@@ -88,15 +88,15 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
 	protected View CreateView(ViewGroup viewGroup){
 		View view = LayoutInflater.from(context).inflate(getLayout(), viewGroup, false);
-		ButterKnife.bind(context, view);
-		Bus.obtain().register(context);
+		ButterKnife.bind(this, view);
+		Bus.obtain().register(this);
 		return view;
 	}
 
-	public abstract int getLayout();
+	protected abstract int getLayout();
 
-	public void initView(View view){}
-	
-	public abstract void initData(Context context, T t, int position);
+	protected void initView(View view){}
+
+	protected abstract void initData(Context context, T t, int position);
 
 }
