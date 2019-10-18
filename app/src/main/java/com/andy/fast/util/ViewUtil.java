@@ -106,17 +106,27 @@ public class ViewUtil {
         HORIZONTAL
     }
 
+
+
     public static void initList(Context context, RecyclerView recyclerView, Model model, int margin){
+        initList(context, recyclerView, model, margin, 1, R.color.gray);
+    }
+
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space){
+        initList(context, recyclerView, model, margin, space, R.color.gray);
+    }
+
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space, int color){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         DividerItemDecoration dividerItemDecoration = null;
         switch (model) {
             case HORIZONTAL:
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                dividerItemDecoration = DividerItemDecoration.createHorizontal(context, context.getResources().getColor(R.color.gray), 1, margin);
+                dividerItemDecoration = DividerItemDecoration.createHorizontal(context, context.getResources().getColor(color), space, margin);
                 break;
             case VERTICAL:
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                dividerItemDecoration = DividerItemDecoration.createVertical(context, context.getResources().getColor(R.color.gray), 1, margin);
+                dividerItemDecoration = DividerItemDecoration.createVertical(context, context.getResources().getColor(color), space, margin);
                 break;
         }
         recyclerView.setLayoutManager(linearLayoutManager);
