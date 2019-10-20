@@ -59,9 +59,14 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         this.notifyDataSetChanged();
     }
 
-    public void add(List<T> beans) {
-        _list.addAll(beans);
+    public void add(List<T> list) {
+        _list.addAll(list);
         this.notifyDataSetChanged();
+    }
+
+    public void refresh(List<T> list) {
+        this._list = list;
+        notifyDataSetChanged();
     }
 
     public void refresh(){

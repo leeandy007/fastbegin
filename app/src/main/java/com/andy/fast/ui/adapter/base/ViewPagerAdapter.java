@@ -93,6 +93,35 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 		return view;
 	}
 
+	public void replaceBean(int position , T t){
+		_list.set(position, t);
+		this.notifyDataSetChanged();
+	}
+
+	public void deleteItem(int position) {
+		_list.remove(position);
+		this.notifyDataSetChanged();
+	}
+
+	public void clearAll() {
+		_list.clear();
+		this.notifyDataSetChanged();
+	}
+
+	public void add(List<T> list) {
+		_list.addAll(list);
+		this.notifyDataSetChanged();
+	}
+
+	public void refresh(List<T> list) {
+		this._list = list;
+		notifyDataSetChanged();
+	}
+
+	public void refresh(){
+		this.notifyDataSetChanged();
+	}
+
 	protected abstract int getLayout();
 
 	protected void initView(View view){}

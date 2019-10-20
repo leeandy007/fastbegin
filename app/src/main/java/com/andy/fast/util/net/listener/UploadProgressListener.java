@@ -1,7 +1,5 @@
 package com.andy.fast.util.net.listener;
 
-import java.io.File;
-
 public interface UploadProgressListener {
 
     /**
