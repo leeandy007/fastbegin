@@ -14,11 +14,18 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     protected Context _context;
     protected List<T> _list;
     protected ViewHolderCreator mViewHolderCreator;
+    protected ViewHoldersCreator mViewHoldersCreator;
 
     public BaseRecyclerViewAdapter(Context _context, List<T> list, ViewHolderCreator mViewHolderCreator){
         this._context = _context;
         this._list = list;
         this.mViewHolderCreator = mViewHolderCreator;
+    }
+
+    public BaseRecyclerViewAdapter(Context _context, List<T> list, ViewHoldersCreator mViewHoldersCreator){
+        this._context = _context;
+        this._list = list;
+        this.mViewHoldersCreator = mViewHoldersCreator;
     }
 
     @Override
