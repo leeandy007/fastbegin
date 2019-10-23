@@ -1,9 +1,11 @@
 package com.andy.fast.ui.adapter.base;
 
 import android.content.Context;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.andy.fast.util.ViewUtil;
 import com.andy.fast.util.bus.Bus;
 
 import butterknife.ButterKnife;
@@ -14,15 +16,30 @@ import butterknife.ButterKnife;
 
 public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder {
 
-    public BaseRecyclerViewHolder(View view) {
-        super(view);
-        ButterKnife.bind(this, view);
+    protected Context _context;
+
+    protected OnItemClickListener<T> mOnItemClickListener;
+
+    public BaseRecyclerViewHolder(Context context, int resId, RecyclerView recyclerView, OnItemClickListener<T> onItemClickListener) {
+        super(ViewUtil.createItemView(context, resId, recyclerView));
+        ButterKnife.bind(this, itemView);
         Bus.obtain().register(this);
-        initView(view);
+        initView(itemView);
+        mOnItemClickListener = onItemClickListener;
     }
 
     protected void initView(View view){}
 
-    protected abstract void initData(Context context, T t, int postion);
+    protected void initData(Context context, final T t, final int position){
+        this._context = context;
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mOnItemClickListener != null){
+                    mOnItemClickListener.onItemClick(v, t, position);
+                }
+            }
+        });
+    };
 
 }
