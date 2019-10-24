@@ -133,14 +133,14 @@ public class ViewUtil {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    public static void initGrid(Context context, RecyclerView recyclerView, int row){
+    public static void initGrid(Context context, RecyclerView recyclerView, int row, int margin){
         recyclerView.setLayoutManager(new GridLayoutManager(context, row));
-        recyclerView.addItemDecoration(new MarginDecoration(context, R.dimen.item_margin));
+        recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
 
-    public static void initStaggered(Context context, RecyclerView recyclerView, int row){
+    public static void initStaggered(Context context, RecyclerView recyclerView, int row, int margin){
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.addItemDecoration(new MarginDecoration(context, R.dimen.item_margin));
+        recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
 
 

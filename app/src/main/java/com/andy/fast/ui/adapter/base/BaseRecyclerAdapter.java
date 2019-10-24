@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class BaseRecyclerAdapter<T> extends BaseRecyclerViewAdapter<T> {
 
-
     public BaseRecyclerAdapter(Context _context, List<T> list, ViewHoldersCreator mViewHoldersCreator) {
         super(_context, list, mViewHoldersCreator);
     }
