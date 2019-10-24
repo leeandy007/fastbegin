@@ -45,7 +45,7 @@ public abstract class BaseInfoAdapter<T> extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		BaseInfoViewHolder holder = null;
 		if(convertView == null){
-			holder = (BaseInfoViewHolder) mViewHolderCreator.createHolder();
+			holder = (BaseInfoViewHolder) mViewHolderCreator.createHolder(parent);
 			convertView = holder.CreateView(parent.getContext());
 			holder.initView(convertView);
 			convertView.setTag(holder);

@@ -96,7 +96,7 @@ public abstract class BaseCheckedAdapter<T> extends BaseInfoAdapter<T> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		BaseCheckedHolder holder = null;
 		if (convertView == null) {
-			holder = (BaseCheckedHolder) mViewHolderCreator.createHolder();
+			holder = (BaseCheckedHolder) mViewHolderCreator.createHolder(parent);
             convertView = holder.CreateView(parent.getContext());
 			holder.initView(convertView);
 			convertView.setTag(holder);

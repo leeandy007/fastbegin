@@ -16,7 +16,7 @@ public class BaseRecyclerAdapter<T> extends BaseRecyclerViewAdapter<T> {
 
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return (BaseRecyclerViewHolder) mViewHoldersCreator.createHolder(viewType);
+        return (BaseRecyclerViewHolder) mViewHoldersCreator.createHolder(parent, viewType);
     }
 
     @Override
