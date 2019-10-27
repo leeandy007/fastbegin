@@ -1,5 +1,6 @@
 package com.andy.fast.ui.activity.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.andy.fast.R;
 import com.andy.fast.enums.ToastMode;
@@ -58,6 +60,8 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         unbinder = ButterKnife.bind(this);
         //注册Bus
         Bus.obtain().register(this);
+        //状态栏字体颜色
+        setAndroidNativeLightStatusBar(_context, isStatusBarTextColorDark());
         //初始化数据
         initData();
     }
@@ -195,5 +199,16 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
     }
 
     protected void insideTouch(MotionEvent ev){};
+
+    protected void setAndroidNativeLightStatusBar(Context context, boolean dark) {
+        View decor = ((Activity)context).getWindow().getDecorView();
+        if (dark) {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+    }
+
+    protected abstract boolean isStatusBarTextColorDark();
 
 }

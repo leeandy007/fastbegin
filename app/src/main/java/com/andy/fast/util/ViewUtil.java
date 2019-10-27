@@ -3,6 +3,7 @@ package com.andy.fast.util;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.andy.fast.R;
 import com.andy.fast.widget.DividerItemDecoration;
 import com.andy.fast.widget.MarginDecoration;
+
+import java.lang.reflect.Field;
 
 public class ViewUtil {
 
@@ -133,15 +138,108 @@ public class ViewUtil {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
+    /**
+     * grid
+     *
+     * @param context
+     * @param recyclerView
+     * @param row 列数
+     * @param margin
+     * @return
+     */
     public static void initGrid(Context context, RecyclerView recyclerView, int row, int margin){
         recyclerView.setLayoutManager(new GridLayoutManager(context, row));
         recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
 
+    /**
+     * 瀑布流布局
+     *
+     * @param context
+     * @param recyclerView
+     * @param row 列数
+     * @param margin
+     * @return
+     */
     public static void initStaggered(Context context, RecyclerView recyclerView, int row, int margin){
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
 
+    /**
+     * DIP -> PX 转换
+     *
+     * @param context
+     * @param dipValue
+     * @return
+     */
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    /**
+     * PX -> DIP 转换
+     *
+     * @param context
+     * @param pxValue
+     * @return
+     */
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * Tablayout的item文字宽度自适应
+     *
+     * @param tabLayout
+     * @return
+     */
+    public static void setTabItemWidhSelfAdapter(TabLayout tabLayout) {
+        try {
+            //拿到tabLayout的mTabStrip属性
+            Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
+            mTabStripField.setAccessible(true);
+
+            LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
+
+            int dp10 = dip2px(tabLayout.getContext(), 10);
+
+            for (int i = 0; i < mTabStrip.getChildCount(); i++) {
+                View tabView = mTabStrip.getChildAt(i);
+
+                //拿到tabView的mTextView属性
+                Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
+                mTextViewField.setAccessible(true);
+
+                TextView mTextView = (TextView) mTextViewField.get(tabView);
+
+                tabView.setPadding(0, 0, 0, 0);
+
+                //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
+                int width = 0;
+                width = mTextView.getWidth();
+                if (width == 0) {
+                    mTextView.measure(0, 0);
+                    width = mTextView.getMeasuredWidth();
+                }
+
+                //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                params.width = width ;
+                params.leftMargin = dp10;
+                params.rightMargin = dp10;
+                tabView.setLayoutParams(params);
+
+                tabView.invalidate();
+            }
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

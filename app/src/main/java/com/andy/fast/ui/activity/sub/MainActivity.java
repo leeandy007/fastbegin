@@ -41,6 +41,11 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
         presenter.fetch(map);
     }
 
+    @Override
+    protected boolean isStatusBarTextColorDark() {
+        return false;
+    }
+
 
     @Override
     public void getData(DataBean bean) {
