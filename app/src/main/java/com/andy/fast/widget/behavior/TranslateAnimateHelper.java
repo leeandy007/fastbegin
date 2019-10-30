@@ -1,7 +1,7 @@
 package com.andy.fast.widget.behavior;
 
 import android.animation.ValueAnimator;
-import android.support.design.widget.CoordinatorLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.view.View;
 
 /**
