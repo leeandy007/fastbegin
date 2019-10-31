@@ -2,6 +2,7 @@ package com.andy.fast.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import com.google.android.material.tabs.TabLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -190,54 +191,52 @@ public class ViewUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static Drawable getDrawable(Context context, int resId){
+        return context.getResources().getDrawable(resId);
+    }
+
+    public static int getColor(Context context, int resId){
+        return context.getResources().getColor(resId);
+    }
+
     /**
      * Tablayout的item文字宽度自适应
      *
      * @param tabLayout
      * @return
      */
-    public static void setTabItemWidhSelfAdapter(TabLayout tabLayout) {
+    public static void setTabItemWidhSelfAdapter(TabLayout tabLayout, int margin) {
         try {
-            //拿到tabLayout的mTabStrip属性
-            Field mTabStripField = tabLayout.getClass().getDeclaredField("mTabStrip");
-            mTabStripField.setAccessible(true);
-
-            LinearLayout mTabStrip = (LinearLayout) mTabStripField.get(tabLayout);
-
-            int dp10 = dip2px(tabLayout.getContext(), 10);
-
+            //拿到tabLayout的slidingTabIndicator属性
+            Field slidingTabIndicatorField = tabLayout.getClass().getDeclaredField("slidingTabIndicator");
+            slidingTabIndicatorField.setAccessible(true);
+            LinearLayout mTabStrip = (LinearLayout) slidingTabIndicatorField.get(tabLayout);
+            int marginPX = dip2px(tabLayout.getContext(), margin);
+            assert mTabStrip != null;
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {
                 View tabView = mTabStrip.getChildAt(i);
-
-                //拿到tabView的mTextView属性
-                Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
+                //拿到tabView的textView属性
+                Field mTextViewField = tabView.getClass().getDeclaredField("textView");
                 mTextViewField.setAccessible(true);
-
                 TextView mTextView = (TextView) mTextViewField.get(tabView);
-
                 tabView.setPadding(0, 0, 0, 0);
-
                 //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
                 int width = 0;
+                assert mTextView != null;
                 width = mTextView.getWidth();
                 if (width == 0) {
                     mTextView.measure(0, 0);
                     width = mTextView.getMeasuredWidth();
                 }
-
                 //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                 params.width = width ;
-                params.leftMargin = dp10;
-                params.rightMargin = dp10;
+                params.leftMargin = marginPX;
+                params.rightMargin = marginPX;
                 tabView.setLayoutParams(params);
-
                 tabView.invalidate();
             }
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
