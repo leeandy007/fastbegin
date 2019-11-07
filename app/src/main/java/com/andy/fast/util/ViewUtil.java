@@ -2,14 +2,13 @@ package com.andy.fast.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.os.Build;
-import com.google.android.material.tabs.TabLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,15 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.andy.fast.R;
 import com.andy.fast.widget.DividerItemDecoration;
 import com.andy.fast.widget.MarginDecoration;
+import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
 
@@ -191,10 +196,6 @@ public class ViewUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static Drawable getDrawable(Context context, int resId){
-        return context.getResources().getDrawable(resId);
-    }
-
     public static int getColor(Context context, int resId){
         return context.getResources().getColor(resId);
     }
@@ -207,38 +208,73 @@ public class ViewUtil {
      */
     public static void setTabItemWidhSelfAdapter(TabLayout tabLayout, int margin) {
         try {
-            //拿到tabLayout的slidingTabIndicator属性
-            Field slidingTabIndicatorField = tabLayout.getClass().getDeclaredField("slidingTabIndicator");
+            // 拿到tabLayout的slidingTabIndicator属性
+            Field slidingTabIndicatorField = tabLayout.getClass().getDeclaredField("mTabStrip");
             slidingTabIndicatorField.setAccessible(true);
             LinearLayout mTabStrip = (LinearLayout) slidingTabIndicatorField.get(tabLayout);
-            int marginPX = dip2px(tabLayout.getContext(), margin);
-            assert mTabStrip != null;
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {
                 View tabView = mTabStrip.getChildAt(i);
                 //拿到tabView的textView属性
-                Field mTextViewField = tabView.getClass().getDeclaredField("textView");
-                mTextViewField.setAccessible(true);
-                TextView mTextView = (TextView) mTextViewField.get(tabView);
+                Field textViewField = tabView.getClass().getDeclaredField("textView");
+                textViewField.setAccessible(true);
+                TextView mTextView = (TextView) textViewField.get(tabView);
                 tabView.setPadding(0, 0, 0, 0);
-                //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
-                int width = 0;
-                assert mTextView != null;
-                width = mTextView.getWidth();
+                // 因为想要的效果是字多宽线就多宽，所以测量mTextView的宽度
+                int width = mTextView.getWidth();
                 if (width == 0) {
                     mTextView.measure(0, 0);
                     width = mTextView.getMeasuredWidth();
                 }
-                //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
+                // 设置tab左右间距,注意这里不能使用Padding,因为源码中线的宽度是根据tabView的宽度来设置的
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                params.width = width ;
-                params.leftMargin = marginPX;
-                params.rightMargin = marginPX;
+                params.width = width;
+                params.leftMargin = dip2px(tabLayout.getContext(), 10);
+                params.rightMargin = dip2px(tabLayout.getContext(), 10);
                 tabView.setLayoutParams(params);
                 tabView.invalidate();
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void updataTab(Context context, TabLayout.Tab tab, boolean isSelected){
+        TextView textView = (TextView) tab.getCustomView();
+        if (textView == null) {
+            textView = new TextView(context);
+        }
+        if(isSelected){
+            float selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 20, context.getResources().getDisplayMetrics());
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize);
+            float x0 = 25, x1 = 100;
+            if (textView.getText().length() == 4) {
+                x0 = 50;
+                x1 = 200;
+            }else if(textView.getText().length() == 3){
+                x0 = 40;
+                x1 = 160;
+            }
+            Shader shader = new LinearGradient(x0, 0, x1, 0, getColor(context, R.color.gray_white), getColor(context, R.color.gray), Shader.TileMode.MIRROR);
+            textView.getPaint().setShader(shader);
+        } else {
+            float selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 18, context.getResources().getDisplayMetrics());
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize);
+            float x0 = 22, x1 = 88;
+            if (textView.getText().length() == 4) {
+                x0 = 44;
+                x1 = 176;
+            } else if(textView.getText().length() == 3){
+                x0 = 33;
+                x1 = 132;
+            }
+            Shader shader = new LinearGradient(x0, 0, x1, 0, getColor(context, R.color.gray_white), getColor(context, R.color.gray), Shader.TileMode.MIRROR);
+            textView.getPaint().setShader(shader);
+        }
+        textView.setTextColor(getColor(context, R.color.colorPrimary));
+        textView.setText(tab.getText());
+        textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        textView.setGravity(Gravity.CENTER);
+        tab.setCustomView(textView);
     }
 
 }
