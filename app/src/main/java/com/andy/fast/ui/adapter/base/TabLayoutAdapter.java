@@ -1,8 +1,9 @@
 package com.andy.fast.ui.adapter.base;
 
 import android.content.Context;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import com.andy.fast.ui.fragment.base.BaseFragment;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by leeandy007 on 2017/9/5.
  */
 
-public class TabLayoutAdapter<K extends BaseFragment, T> extends FragmentAdapter {
+public class TabLayoutAdapter<K extends Fragment, T> extends FragmentAdapter {
 
     private List<T> titles;
 
