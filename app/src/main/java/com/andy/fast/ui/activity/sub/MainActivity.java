@@ -46,6 +46,16 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
         return false;
     }
 
+    @Override
+    protected boolean isStatusBarBackgroundTran() {
+        return false;
+    }
+
+    @Override
+    protected boolean isNotCanCutAndRecordScreen() {
+        return false;
+    }
+
 
     @Override
     public void getData(DataBean bean) {
