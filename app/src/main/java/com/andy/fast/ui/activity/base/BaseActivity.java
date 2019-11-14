@@ -1,21 +1,22 @@
 package com.andy.fast.ui.activity.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.WindowManager;
 
-import com.andy.fast.R;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
 import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.ViewUtil;
 import com.andy.fast.util.bus.Bus;
+import com.andy.fast.util.immersive.ImmersiveManage;
 import com.andy.fast.view.IView;
 
 import butterknife.ButterKnife;
@@ -50,6 +51,14 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         _context = getContext();
         //全局手势
         gestureDetector = new GestureDetector(_context, onGestureListener);
+        //是否可以截图和录屏
+        if(isNotCanCutAndRecordScreen()){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
+        //状态栏是否透明
+        if(isStatusBarBackgroundTran()){
+            ImmersiveManage.immersiveAboveAPI23(this, Color.TRANSPARENT, Color.TRANSPARENT, isStatusBarTextColorDark());
+        }
         //初始化布局
         setContentView(getLayout(savedInstanceState));
         //初始化交换层
@@ -60,8 +69,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         unbinder = ButterKnife.bind(this);
         //注册Bus
         Bus.obtain().register(this);
-        //状态栏字体颜色
-        setAndroidNativeLightStatusBar(_context, isStatusBarTextColorDark());
         //初始化数据
         initData();
     }
@@ -125,7 +132,7 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
      * */
     protected void animBack(){
         /**------>>>左入右出*/
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        overridePendingTransition(com.andy.fast.R.anim.slide_in_left, com.andy.fast.R.anim.slide_out_right);
     }
 
     /**
@@ -200,15 +207,10 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
 
     protected void insideTouch(MotionEvent ev){};
 
-    protected void setAndroidNativeLightStatusBar(Context context, boolean dark) {
-        View decor = ((Activity)context).getWindow().getDecorView();
-        if (dark) {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
-    }
-
     protected abstract boolean isStatusBarTextColorDark();
+
+    protected abstract boolean isStatusBarBackgroundTran();
+
+    protected abstract boolean isNotCanCutAndRecordScreen();
 
 }
