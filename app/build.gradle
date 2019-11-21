@@ -62,7 +62,7 @@ dependencies {
     androidTestApi 'androidx.test.espresso:espresso-core:3.2.0'
 
     api 'com.google.android.material:material:1.0.0'
-    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
 
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.okhttp3:okhttp:3.12.0'
