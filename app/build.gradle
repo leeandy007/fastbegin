@@ -53,45 +53,46 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testApi 'junit:junit:4.12'
+    androidTestApi 'androidx.test:runner:1.2.0'
+    androidTestApi 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'com.google.android.material:material:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
 
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'com.cjj.materialrefeshlayout:library:1.3.0'
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
-    implementation 'com.yanzhenjie:permission:2.0.3'
-    implementation 'id.zelory:compressor:2.1.0'
-    implementation 'de.hdodenhof:circleimageview:3.0.1'
-    implementation 'com.bigkoo:convenientbanner:2.1.5'
-    implementation 'com.superluo:textbannerview:1.0.5'
-    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    api 'com.cjj.materialrefeshlayout:library:1.3.0'
+    api 'com.github.chrisbanes:PhotoView:2.1.3'
+    api 'com.yanzhenjie:permission:2.0.3'
+    api 'id.zelory:compressor:2.1.0'
+    api 'de.hdodenhof:circleimageview:3.0.1'
+    api 'com.bigkoo:convenientbanner:2.1.5'
+    api 'com.superluo:textbannerview:1.0.5'
+    api 'com.mcxiaoke.volley:library:1.0.19'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.12'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation 'com.jakewharton:butterknife:10.0.0'
+    api 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    implementation 'org.projectlombok:lombok:1.16.10'
+    api 'org.projectlombok:lombok:1.16.10'
     annotationProcessor "org.projectlombok:lombok:1.16.10"
-    implementation 'javax.annotation:javax.annotation-api:1.2'
+    api 'javax.annotation:javax.annotation-api:1.2'
 
-    implementation 'com.contrarywind:Android-PickerView:4.1.9'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.contrarywind:Android-PickerView:4.1.9'
+//    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
-    implementation 'org.greenrobot:greendao:3.2.2'
+    api 'org.greenrobot:greendao:3.2.2'
 
 }
