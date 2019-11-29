@@ -32,14 +32,19 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
 
     protected void initData(Context context, final T t, final int position){
         this._context = context;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mOnItemClickListener != null){
-                    mOnItemClickListener.onItemClick(v, t, position);
-                }
+        itemView.setOnClickListener(v -> {
+            if(mOnItemClickListener != null){
+                mOnItemClickListener.onItemClick(v, t, position);
             }
         });
     };
+
+    public void RegisterClickListener(View view, T t, int position){
+        view.setOnClickListener(v -> {
+            if(mOnItemClickListener != null){
+                mOnItemClickListener.onItemClick(v, t, position);
+            }
+        });
+    }
 
 }
