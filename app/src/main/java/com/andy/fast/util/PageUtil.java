@@ -18,6 +18,7 @@ public class PageUtil {
          * @return 返回RecyclerView的适配器
          */
         T createAdapter();
+
     }
 
     public interface PageListener<T extends BaseInfoAdapter>{
@@ -50,7 +51,7 @@ public class PageUtil {
                 if(null != adapter){
                     adapter.clearAll();
                 }
-                ToastUtil.obtain().Short(context,"暂无数据");
+//                ToastUtil.obtain().Short(context,"暂无数据");
             }
         } else {
             if (!StringUtil.isEmpty(list)) {
@@ -83,7 +84,7 @@ public class PageUtil {
                 if(null != adapter){
                     adapter.clearAll();
                 }
-                ToastUtil.obtain().Short(context,"暂无数据");
+//                ToastUtil.obtain().Short(context,"暂无数据");
             }
         } else {
             if (!StringUtil.isEmpty(list)) {
