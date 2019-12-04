@@ -99,14 +99,14 @@ public class ViewUtil {
     }
 
     public static int screenWidth(Context context){
-        WindowManager manager = ((Activity)context).getWindowManager();
+        WindowManager manager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.widthPixels;
     }
 
     public static int screenHeight(Context context){
-        WindowManager manager = ((Activity)context).getWindowManager();
+        WindowManager manager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
@@ -116,8 +116,6 @@ public class ViewUtil {
         VERTICAL,
         HORIZONTAL
     }
-
-
 
     public static void initList(Context context, RecyclerView recyclerView, Model model, int margin){
         initList(context, recyclerView, model, margin, 1, R.color.gray);

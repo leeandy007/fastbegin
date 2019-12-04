@@ -262,4 +262,12 @@ public class StringUtil {
 		return head + url;
 	}
 
+	public static boolean getBoolean(Integer integer){
+		return (integer != null && integer == 1) ? true : false;
+	}
+
+	public static Integer getInteger(boolean status){
+		return status ? 1 : 0;
+	}
+
 }
