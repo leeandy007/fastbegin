@@ -156,7 +156,11 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
             insideTouch(ev);
             return super.dispatchTouchEvent(ev);
         } else {
-            return onTouchEvent(ev);
+            if(onTouchEvent(ev) == true){
+                return onTouchEvent(ev);
+            } else {
+                return super.dispatchTouchEvent(ev);
+            }
         }
     }
 
