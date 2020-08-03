@@ -58,7 +58,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + mSpace;
+            final int bottom = top + dip2px(mSpace);
             mRect.set(left, top, right, bottom);
             c.drawRect(mRect, mPaint);
         }
@@ -74,7 +74,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
-            final int right = left + mSpace;
+            final int right = left + dip2px(mSpace);
             mRect.set(left, top, right, bottom);
             c.drawRect(mRect, mPaint);
         }
@@ -84,9 +84,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         if (mOrientation == VERTICAL_LIST) {
-            outRect.set(0, 0, 0, mSpace);
+            outRect.set(0, 0, 0, dip2px(mSpace));
         } else {
-            outRect.set(0, 0, mSpace, 0);
+            outRect.set(0, 0, dip2px(mSpace), 0);
         }
     }
 
