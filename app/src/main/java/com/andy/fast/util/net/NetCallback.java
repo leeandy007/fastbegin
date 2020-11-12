@@ -1,6 +1,7 @@
 package com.andy.fast.util.net;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -24,7 +25,7 @@ public  abstract class NetCallback<Result> implements Callback {
      * 将String转化成泛型对象
      * */
     private Result changeResult(String json){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().serializeNulls().create();
         Type type = analysisClassInfo(this);
         return gson.fromJson(json, type);
     }
