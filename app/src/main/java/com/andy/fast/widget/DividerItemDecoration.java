@@ -84,9 +84,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         if (mOrientation == VERTICAL_LIST) {
-            outRect.set(0, 0, 0, dip2px(mSpace));
+            outRect.set(0, 0, 0, mSpace);
         } else {
-            outRect.set(0, 0, dip2px(mSpace), 0);
+            outRect.set(0, 0, mSpace, 0);
         }
     }
 
