@@ -65,7 +65,7 @@ dependencies {
     api 'androidx.recyclerview:recyclerview:1.1.0'
 
     api 'com.google.code.gson:gson:2.8.6'
-    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.okhttp3:okhttp:3.14.9'
     api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 //    api 'com.cjj.materialrefeshlayout:library:1.3.0'
     api 'com.github.chrisbanes:PhotoView:2.1.3'
@@ -76,10 +76,10 @@ dependencies {
     api 'com.superluo:textbannerview:1.0.5'
     api 'com.mcxiaoke.volley:library:1.0.19'
 
-    api 'com.squareup.retrofit2:retrofit:2.5.0'
-    api 'com.squareup.retrofit2:converter-gson:2.5.0'
-    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     api 'io.reactivex.rxjava2:rxjava:2.2.12'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
