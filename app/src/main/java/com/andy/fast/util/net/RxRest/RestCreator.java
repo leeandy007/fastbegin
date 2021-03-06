@@ -13,6 +13,7 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -31,7 +32,7 @@ public class RestCreator {
     }
 
     private static final class OKHttpHolder {
-        private static final ArrayList<Interceptor> LOGGING_INTERCEPTORS = NetConfig.getConfiguration(ConfigKeys.LOGGING_INTERCEPTOR);
+        private static final HttpLoggingInterceptor LOGGING_INTERCEPTOR = NetConfig.getConfiguration(ConfigKeys.LOGGING_INTERCEPTOR);
         private static final ArrayList<Interceptor> INTERCEPTORS = NetConfig.getConfiguration(ConfigKeys.INTERCEPTOR);
         private static final ArrayList<ConnectionSpec> CONNECTION_SPECS = NetConfig.getConfiguration(ConfigKeys.CONNECTION_SPEC);
         private static final SocketFactory SOCKET_FACTORY = NetConfig.getConfiguration(ConfigKeys.SOCKET_FACTORY);
@@ -43,10 +44,8 @@ public class RestCreator {
         private static final OkHttpClient getClient() {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
-            if (LOGGING_INTERCEPTORS != null) {
-                for (Interceptor interceptor : LOGGING_INTERCEPTORS) {
-                    builder.addNetworkInterceptor(interceptor);
-                }
+            if (LOGGING_INTERCEPTOR != null) {
+                builder.addNetworkInterceptor(LOGGING_INTERCEPTOR);
             }
             if (INTERCEPTORS != null) {
                 for (Interceptor interceptor : INTERCEPTORS) {

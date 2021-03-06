@@ -9,12 +9,11 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class Configurator {
 
     private static final HashMap<Object, Object> CONFIGS = new HashMap<>();
-
-    private static final ArrayList<Interceptor> LOGGING_INTERCEPTORS = new ArrayList<>();
 
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
@@ -38,11 +37,7 @@ public class Configurator {
 
     final <T> T getConfiguration(Object key){
         checkConfiguration();
-        final Object value = CONFIGS.get(key);
-//        if(value == null){
-//            throw new NullPointerException(key.toString() + " IS NULL");
-//        }
-        return (T) value;
+        return (T) CONFIGS.get(key);
     }
 
     //配置APIHOST
@@ -52,12 +47,8 @@ public class Configurator {
     }
 
     //配置日志拦截器
-    public final Configurator setLoggingInterceptors(ArrayList<Interceptor> interceptors){
-        if(interceptors == null){
-            interceptors = new ArrayList<>();
-        }
-        LOGGING_INTERCEPTORS.addAll(interceptors);
-        CONFIGS.put(ConfigKeys.LOGGING_INTERCEPTOR, LOGGING_INTERCEPTORS);
+    public final Configurator setLoggingInterceptors(HttpLoggingInterceptor interceptor){
+        CONFIGS.put(ConfigKeys.LOGGING_INTERCEPTOR, interceptor);
         return this;
     }
 
