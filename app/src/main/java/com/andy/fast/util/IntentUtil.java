@@ -13,11 +13,6 @@ import com.andy.fast.R;
 
 public class IntentUtil {
 
-    public enum Method {
-        GET,
-        POST
-    }
-
     /**
      * @param clszz  目标页面
      * @param bundle 传值载体

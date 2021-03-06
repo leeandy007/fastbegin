@@ -5,7 +5,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
