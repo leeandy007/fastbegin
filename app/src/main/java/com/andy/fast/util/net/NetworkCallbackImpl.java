@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
+//网络监听
 public class NetworkCallbackImpl extends ConnectivityManager.NetworkCallback {
 
     private String TAG;
