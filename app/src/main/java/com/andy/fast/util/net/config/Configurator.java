@@ -14,19 +14,11 @@ public class Configurator {
 
     private static final HashMap<Object, Object> CONFIGS = new HashMap<>();
 
-    private String BASE_URL;
-
     private static final ArrayList<Interceptor> LOGGING_INTERCEPTORS = new ArrayList<>();
 
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private static final ArrayList<ConnectionSpec> CONNECTION_SPECS = new ArrayList<>();
-
-    private SocketFactory SOCKET_FACTORY;
-
-    private SSLSocketFactory SSL_SOCKET_FACTORY;
-
-    X509TrustManager X_509_TRUST_MANAGER;
 
     private static class Holder{
         private static final Configurator INSTANCE = new Configurator();
@@ -55,7 +47,7 @@ public class Configurator {
 
     //配置APIHOST
     public final Configurator setHost(String host){
-        BASE_URL = host;
+        CONFIGS.put(ConfigKeys.API_HOST, host);
         return this;
     }
 
@@ -65,6 +57,7 @@ public class Configurator {
             interceptors = new ArrayList<>();
         }
         LOGGING_INTERCEPTORS.addAll(interceptors);
+        CONFIGS.put(ConfigKeys.LOGGING_INTERCEPTOR, LOGGING_INTERCEPTORS);
         return this;
     }
 
@@ -74,6 +67,7 @@ public class Configurator {
             interceptors = new ArrayList<>();
         }
         INTERCEPTORS.addAll(interceptors);
+        CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
 
@@ -83,24 +77,25 @@ public class Configurator {
             connectionSpecs = new ArrayList<>();
         }
         CONNECTION_SPECS.addAll(connectionSpecs);
+        CONFIGS.put(ConfigKeys.CONNECTION_SPEC, CONNECTION_SPECS);
         return this;
     }
 
     //配置SocketFactory
     public final Configurator setSocketFactory(SocketFactory socketFactory){
-        SOCKET_FACTORY = socketFactory;
+        CONFIGS.put(ConfigKeys.SOCKET_FACTORY, socketFactory);
         return this;
     }
 
     //配置SSLSocketFactory
     public final Configurator setSSLSocketFactory(SSLSocketFactory sslSocketFactory){
-        SSL_SOCKET_FACTORY = sslSocketFactory;
+        CONFIGS.put(ConfigKeys.SSL_SOCKET_FACTORY, sslSocketFactory);
         return this;
     }
 
     //配置X509TrustManager
     public final Configurator setX509TrustManager(X509TrustManager x509TrustManager){
-        X_509_TRUST_MANAGER = x509TrustManager;
+        CONFIGS.put(ConfigKeys.X_509_TRUST_MANAGER, x509TrustManager);
         return this;
     }
 
@@ -114,13 +109,6 @@ public class Configurator {
 
     //配置完成
     public final void build(){
-        CONFIGS.put(ConfigKeys.API_HOST, BASE_URL);
-        CONFIGS.put(ConfigKeys.LOGGING_INTERCEPTOR, LOGGING_INTERCEPTORS);
-        CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
-        CONFIGS.put(ConfigKeys.CONNECTION_SPEC, CONNECTION_SPECS);
-        CONFIGS.put(ConfigKeys.SOCKET_FACTORY, SOCKET_FACTORY);
-        CONFIGS.put(ConfigKeys.SSL_SOCKET_FACTORY, SSL_SOCKET_FACTORY);
-        CONFIGS.put(ConfigKeys.X_509_TRUST_MANAGER, X_509_TRUST_MANAGER);
         CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
     }
 
