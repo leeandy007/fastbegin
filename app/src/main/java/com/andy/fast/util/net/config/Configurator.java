@@ -3,13 +3,30 @@ package com.andy.fast.util.net.config;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 
 public class Configurator {
 
     private static final HashMap<Object, Object> CONFIGS = new HashMap<>();
 
+    private String BASE_URL;
+
+    private static final ArrayList<Interceptor> LOGGING_INTERCEPTORS = new ArrayList<>();
+
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
+
+    private static final ArrayList<ConnectionSpec> CONNECTION_SPECS = new ArrayList<>();
+
+    private SocketFactory SOCKET_FACTORY;
+
+    private SSLSocketFactory SSL_SOCKET_FACTORY;
+
+    X509TrustManager X_509_TRUST_MANAGER;
 
     private static class Holder{
         private static final Configurator INSTANCE = new Configurator();
@@ -38,7 +55,16 @@ public class Configurator {
 
     //配置APIHOST
     public final Configurator setHost(String host){
-        CONFIGS.put(ConfigKeys.API_HOST, host);
+        BASE_URL = host;
+        return this;
+    }
+
+    //配置日志拦截器
+    public final Configurator setLoggingInterceptors(ArrayList<Interceptor> interceptors){
+        if(interceptors == null){
+            interceptors = new ArrayList<>();
+        }
+        LOGGING_INTERCEPTORS.addAll(interceptors);
         return this;
     }
 
@@ -48,7 +74,33 @@ public class Configurator {
             interceptors = new ArrayList<>();
         }
         INTERCEPTORS.addAll(interceptors);
-        CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    //配置ConnectionSpec
+    public final Configurator setConnectionSpecs(ArrayList<ConnectionSpec> connectionSpecs){
+        if(connectionSpecs == null){
+            connectionSpecs = new ArrayList<>();
+        }
+        CONNECTION_SPECS.addAll(connectionSpecs);
+        return this;
+    }
+
+    //配置SocketFactory
+    public final Configurator setSocketFactory(SocketFactory socketFactory){
+        SOCKET_FACTORY = socketFactory;
+        return this;
+    }
+
+    //配置SSLSocketFactory
+    public final Configurator setSSLSocketFactory(SSLSocketFactory sslSocketFactory){
+        SSL_SOCKET_FACTORY = sslSocketFactory;
+        return this;
+    }
+
+    //配置X509TrustManager
+    public final Configurator setX509TrustManager(X509TrustManager x509TrustManager){
+        X_509_TRUST_MANAGER = x509TrustManager;
         return this;
     }
 
@@ -62,6 +114,13 @@ public class Configurator {
 
     //配置完成
     public final void build(){
+        CONFIGS.put(ConfigKeys.API_HOST, BASE_URL);
+        CONFIGS.put(ConfigKeys.LOGGING_INTERCEPTOR, LOGGING_INTERCEPTORS);
+        CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        CONFIGS.put(ConfigKeys.CONNECTION_SPEC, CONNECTION_SPECS);
+        CONFIGS.put(ConfigKeys.SOCKET_FACTORY, SOCKET_FACTORY);
+        CONFIGS.put(ConfigKeys.SSL_SOCKET_FACTORY, SSL_SOCKET_FACTORY);
+        CONFIGS.put(ConfigKeys.X_509_TRUST_MANAGER, X_509_TRUST_MANAGER);
         CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
     }
 

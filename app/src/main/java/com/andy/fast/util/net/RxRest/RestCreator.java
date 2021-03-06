@@ -4,24 +4,25 @@ import com.andy.fast.util.net.config.ConfigKeys;
 import com.andy.fast.util.net.config.NetConfig;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.CipherSuite;
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
+
 import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.TlsVersion;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RestCreator {
 
-    private static final class RetrofitHolder{
+    private static final class RetrofitHolder {
         private static final String BASE_URL = NetConfig.getConfiguration(ConfigKeys.API_HOST);
         //创建全局的Retrofit客户端
-        private  static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
+        private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -29,46 +30,48 @@ public class RestCreator {
                 .build();
     }
 
-    private static final class OKHttpHolder{
-        private static final ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
-                .tlsVersions(TlsVersion.TLS_1_2, TlsVersion.TLS_1_1, TlsVersion.TLS_1_0)
-                .cipherSuites(
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
-                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_DHE_DSS_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_DHE_RSA_WITH_AES_256_CBC_SHA)
-                .build();
+    private static final class OKHttpHolder {
+        private static final ArrayList<Interceptor> LOGGING_INTERCEPTORS = NetConfig.getConfiguration(ConfigKeys.LOGGING_INTERCEPTOR);
         private static final ArrayList<Interceptor> INTERCEPTORS = NetConfig.getConfiguration(ConfigKeys.INTERCEPTOR);
+        private static final ArrayList<ConnectionSpec> CONNECTION_SPECS = NetConfig.getConfiguration(ConfigKeys.CONNECTION_SPEC);
+        private static final SocketFactory SOCKET_FACTORY = NetConfig.getConfiguration(ConfigKeys.SOCKET_FACTORY);
+        private static final SSLSocketFactory SSL_SOCKET_FACTORY = NetConfig.getConfiguration(ConfigKeys.SSL_SOCKET_FACTORY);
+        private static final X509TrustManager X_509_TRUST_MANAGER = NetConfig.getConfiguration(ConfigKeys.X_509_TRUST_MANAGER);
         private static final int TIME_OUT = 60;
+
         //创建全局的OKHttp客户端
-        private static final OkHttpClient getClient(){
+        private static final OkHttpClient getClient() {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
-            builder.connectionSpecs(Collections.singletonList(spec));
-            if(INTERCEPTORS != null){
+            if (LOGGING_INTERCEPTORS != null) {
+                for (Interceptor interceptor : LOGGING_INTERCEPTORS) {
+                    builder.addNetworkInterceptor(interceptor);
+                }
+            }
+            if (INTERCEPTORS != null) {
                 for (Interceptor interceptor : INTERCEPTORS) {
                     builder.addInterceptor(interceptor);
                 }
             }
+            if (CONNECTION_SPECS != null) {
+                builder.connectionSpecs(CONNECTION_SPECS);
+            }
+            if (SOCKET_FACTORY != null) {
+                builder.socketFactory(SOCKET_FACTORY);
+            }
+            if (SSL_SOCKET_FACTORY != null && X_509_TRUST_MANAGER != null) {
+                builder.sslSocketFactory(SSL_SOCKET_FACTORY, X_509_TRUST_MANAGER);
+            }
             return builder.build();
         }
-
     }
 
     //提供接口让调用者得到retrofit对象
-    private static final class RxRestServiceHolder{
+    private static final class RxRestServiceHolder {
         private static final RxRestService REST_SERVICE = RetrofitHolder.RETROFIT_CLIENT.create(RxRestService.class);
     }
 
-    public static RxRestService getRxRestService(){
+    public static RxRestService getRxRestService() {
         return RxRestServiceHolder.REST_SERVICE;
     }
 
