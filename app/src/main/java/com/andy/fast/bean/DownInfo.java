@@ -14,7 +14,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 public class DownInfo implements Serializable {
 
     /* 存储位置 */

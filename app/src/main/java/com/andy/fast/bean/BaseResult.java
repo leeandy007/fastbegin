@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 public class BaseResult<Result> implements Serializable {
 
     /**
