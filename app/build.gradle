@@ -86,8 +86,8 @@ dependencies {
     api 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    api 'org.projectlombok:lombok:1.16.10'
-    annotationProcessor "org.projectlombok:lombok:1.16.10"
+    api 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor "org.projectlombok:lombok:1.18.20"
     api 'javax.annotation:javax.annotation-api:1.2'
 
     api 'com.contrarywind:Android-PickerView:4.1.9'
