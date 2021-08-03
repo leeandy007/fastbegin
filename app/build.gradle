@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 21
         versionCode 1
@@ -66,14 +66,11 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.okhttp3:okhttp:3.14.9'
     api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+
     api 'com.github.chrisbanes:PhotoView:2.1.3'
-    api 'com.yanzhenjie:permission:2.0.3'
-    api 'id.zelory:compressor:2.1.0'
+
     api 'de.hdodenhof:circleimageview:3.0.1'
-    api 'com.bigkoo:convenientbanner:2.1.5'
-    api 'com.superluo:textbannerview:1.0.5'
+
     api 'com.mcxiaoke.volley:library:1.0.19'
 
     api 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -90,9 +87,15 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:1.18.20"
     api 'javax.annotation:javax.annotation-api:1.2'
 
-    api 'com.contrarywind:Android-PickerView:4.1.9'
     api 'com.github.leeandy007:material-dialog:0.9.7.0'
     api 'commons-codec:commons-codec:1.10'
 
+//    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+//    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+//    api 'com.contrarywind:Android-PickerView:4.1.9'
+//    api 'com.bigkoo:convenientbanner:2.1.5'
+//    api 'com.superluo:textbannerview:1.0.5'
+//    api 'com.yanzhenjie:permission:2.0.3'
+//    api 'id.zelory:compressor:2.1.0'
 
 }
