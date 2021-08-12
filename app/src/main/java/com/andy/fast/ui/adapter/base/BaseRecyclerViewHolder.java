@@ -24,7 +24,6 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
         super(ViewUtil.createItemView(context, resId, parent));
         ButterKnife.bind(this, itemView);
         Bus.obtain().register(this);
-        initView(itemView);
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -32,6 +31,7 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
 
     protected void initData(Context context, final T t, final int position){
         this._context = context;
+        initView(itemView);
         itemView.setOnClickListener(v -> {
             if(mOnItemClickListener != null){
                 mOnItemClickListener.onItemClick(v, t, position);
