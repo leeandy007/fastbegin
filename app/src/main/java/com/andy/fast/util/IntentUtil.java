@@ -5,6 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.andy.fast.R;
 
 /**
@@ -73,6 +79,25 @@ public class IntentUtil {
     public static void animNext(Context context) {
         /**<<<------右入左出*/
         ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public static ActivityResultLauncher<Intent> register(Fragment fragment, ActivityResultCallback callback){
+        return fragment.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
+    }
+
+    public static ActivityResultLauncher<Intent> register(AppCompatActivity activity, ActivityResultCallback callback){
+        return activity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
+    }
+
+    public static void launch(ActivityResultLauncher<Intent> resultLauncher, Context context, Class clszz, Bundle bundle, String title){
+        Intent intent = new Intent(context, clszz);
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putString("title", title);
+        intent.putExtras(bundle);
+        resultLauncher.launch(intent);
+        animNext(context);
     }
 
 }
