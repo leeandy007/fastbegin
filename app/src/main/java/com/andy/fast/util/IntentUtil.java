@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.andy.fast.R;
+import com.andy.fast.common.Constant;
 
 /**
  * Created by leeandy007 on 2017/7/6.
@@ -89,12 +90,13 @@ public class IntentUtil {
         return activity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
     }
 
-    public static void launch(ActivityResultLauncher<Intent> resultLauncher, Context context, Class clszz, Bundle bundle, String title){
+    public static void launch(ActivityResultLauncher<Intent> resultLauncher, Context context, Class clszz, Bundle bundle, String title, int requestCode){
         Intent intent = new Intent(context, clszz);
         if (bundle == null) {
             bundle = new Bundle();
         }
         bundle.putString("title", title);
+        bundle.putInt(Constant.RequestCode, requestCode);
         intent.putExtras(bundle);
         resultLauncher.launch(intent);
         animNext(context);

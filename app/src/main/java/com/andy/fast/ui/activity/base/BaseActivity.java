@@ -8,11 +8,16 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.andy.fast.common.Constant;
 import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
+import com.andy.fast.util.IntentUtil;
 import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.ViewUtil;
 import com.andy.fast.util.bus.Bus;
@@ -44,6 +49,8 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
 
     protected GestureDetector gestureDetector;
 
+    protected ActivityResultLauncher<Intent> registerLauncher;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,12 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         Bus.obtain().register(this);
         //初始化数据
         initData();
+        //初始化返回值跳转的注册
+        registerLauncher = IntentUtil.register(this, (ActivityResultCallback<ActivityResult>) result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                doActivityResult(result.getData());
+            }
+        });
     }
 
     /**
@@ -112,6 +125,14 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
      * 初始化数据
      * */
     protected abstract void initData();
+
+    /**
+     * 带返回值跳转的数据的处理方法
+     * */
+    protected void doActivityResult(Intent intent){
+        int requestCode = intent.getIntExtra(Constant.RequestCode, 0);
+        doActivityResult(requestCode, intent);
+    };
 
     /**
      * 带返回值跳转的数据的处理方法

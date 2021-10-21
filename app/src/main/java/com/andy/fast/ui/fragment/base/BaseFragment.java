@@ -1,16 +1,24 @@
 package com.andy.fast.ui.fragment.base;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andy.fast.common.Constant;
 import com.andy.fast.enums.ToastMode;
 import com.andy.fast.presenter.base.BasePresenter;
+import com.andy.fast.util.IntentUtil;
 import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
@@ -35,6 +43,8 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 	protected Unbinder unbinder;
 
 	protected Integer page = 1;
+
+	protected ActivityResultLauncher<Intent> registerLauncher;
 
 	/**
 	 * Activity取Fragment所传递的值时调用的回调接口
@@ -73,6 +83,12 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 		Bus.obtain().register(this);
 		initView(v);
 		initData();
+		//初始化返回值跳转的注册
+		registerLauncher = IntentUtil.register(this, (ActivityResultCallback<ActivityResult>) result -> {
+			if (result.getResultCode() == RESULT_OK) {
+				doActivityResult(result.getData());
+			}
+		});
 		return v;
 	}
 
@@ -127,10 +143,18 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (resultCode == Activity.RESULT_OK) {
+		if (resultCode == RESULT_OK) {
 			doActivityResult(requestCode, intent);
 		}
 	}
+
+	/**
+	 * 带返回值跳转的数据的处理方法
+	 * */
+	protected void doActivityResult(Intent intent){
+		int requestCode = intent.getIntExtra(Constant.RequestCode, 0);
+		doActivityResult(requestCode, intent);
+	};
 
 	/**
 	 * 带返回值跳转的数据的处理方法
