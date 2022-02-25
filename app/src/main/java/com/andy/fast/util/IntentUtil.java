@@ -37,6 +37,16 @@ public class IntentUtil {
     }
 
     /**
+     * @param context  上下文
+     * @param intent 传值载体
+     * @Desc 正常页面跳转
+     */
+    public static void startActivity(Context context, Intent intent) {
+        context.startActivity(intent);
+        animNext(context);
+    }
+
+    /**
      * @param clszz       目标页面
      * @param bundle      传值
      * @param requestCode 请求码
@@ -49,6 +59,17 @@ public class IntentUtil {
         }
         bundle.putString("title", title);
         intent.putExtras(bundle);
+        ((Activity) context).startActivityForResult(intent, requestCode);
+        animNext(context);
+    }
+
+    /**
+     * @param context     上下文
+     * @param intent      传值
+     * @param requestCode 请求码
+     * @Desc 带返回值跳转
+     */
+    public static void startActivityForResult(Context context, Intent intent, int requestCode) {
         ((Activity) context).startActivityForResult(intent, requestCode);
         animNext(context);
     }
@@ -98,6 +119,11 @@ public class IntentUtil {
         bundle.putString("title", title);
         bundle.putInt(Constant.RequestCode, requestCode);
         intent.putExtras(bundle);
+        resultLauncher.launch(intent);
+        animNext(context);
+    }
+
+    public static void launch(ActivityResultLauncher<Intent> resultLauncher, Context context, Intent intent){
         resultLauncher.launch(intent);
         animNext(context);
     }
