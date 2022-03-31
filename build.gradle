@@ -4,11 +4,10 @@ buildscript {
     
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.0.0'
         // NOTE: Do not place your application dependencies here; they belong
@@ -19,10 +18,11 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io'}
         maven { url 'https://maven.google.com'}
+        maven { url 'https://maven.aliyun.com/repository/google'}
+        maven { url 'https://maven.aliyun.com/repository/jcenter'}
         maven { url 'https://repo1.maven.org/maven2/' }
     }
 }
