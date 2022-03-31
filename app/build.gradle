@@ -93,6 +93,6 @@ dependencies {
 //    api 'com.bigkoo:convenientbanner:2.1.5'
 //    api 'com.superluo:textbannerview:1.0.5'
 //    api 'com.yanzhenjie:permission:2.0.3'
-    api 'id.zelory:compressor:2.1.0'
+//    api 'id.zelory:compressor:2.1.0'
 
 }
