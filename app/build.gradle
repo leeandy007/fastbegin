@@ -2,12 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 32
+    namespace = 'com.andy.fast'
+    compileSdkVersion 36
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+        multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "int", "BUILD_GRADLE_RELEASE_STATUS", BuildReleaseStatus
         buildConfigField "int", "BUILD_GRADLE_DEV_STATUS", BuildDevStatus
@@ -25,7 +26,7 @@ android {
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
         }
         release {
             buildConfigField "int", "BUILD_GRADLE_STATUS", BuildLibStatus
@@ -38,13 +39,15 @@ android {
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
         }
     }
     lintOptions {
         disable 'GoogleAppIndexingWarning'
         baseline file("lint-baseline.xml")
     }
+
+    android.buildFeatures.buildConfig = true
 //    compileOptions {
 //        sourceCompatibility JavaVersion.VERSION_1_8
 //        targetCompatibility JavaVersion.VERSION_1_8
