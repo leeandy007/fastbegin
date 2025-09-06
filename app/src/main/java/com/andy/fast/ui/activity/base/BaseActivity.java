@@ -24,9 +24,6 @@ import com.andy.fast.util.bus.Bus;
 import com.andy.fast.util.immersive.ImmersiveManage;
 import com.andy.fast.view.IView;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 import static android.view.Gravity.LEFT;
 import static android.view.Gravity.RIGHT;
 
@@ -40,10 +37,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
      * 交换层
      * */
     protected P presenter;
-    /**
-     * butter
-     * */
-    protected Unbinder unbinder;
 
     protected Integer page = 1;
 
@@ -72,8 +65,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         presenter = CreatePresenter();
         //绑定交换层的生命周期
         presenter.onAttach((V)this);
-        //注册butter
-        unbinder = ButterKnife.bind(this);
         //注册Bus
         Bus.obtain().register(this);
         //初始化数据
@@ -106,8 +97,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter> ext
         super.onDestroy();
         //解绑交换层
         presenter.onDetach();
-        //解绑butter
-        unbinder.unbind();
         //解绑Bus
         Bus.obtain().unregister(this);
     }

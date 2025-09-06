@@ -11,9 +11,6 @@ import com.andy.fast.util.bus.Bus;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
-
 public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
 	protected List<T> _list;
@@ -88,7 +85,6 @@ public abstract class ViewPagerAdapter<T> extends PagerAdapter {
 
 	protected View CreateView(ViewGroup viewGroup){
 		View view = LayoutInflater.from(context).inflate(getLayout(), viewGroup, false);
-		ButterKnife.bind(this, view);
 		Bus.obtain().register(this);
 		return view;
 	}

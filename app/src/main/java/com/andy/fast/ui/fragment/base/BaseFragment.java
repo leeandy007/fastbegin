@@ -23,9 +23,6 @@ import com.andy.fast.util.ToastUtil;
 import com.andy.fast.util.bus.Bus;
 import com.andy.fast.view.IView;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * @Describe
  * @Author leeandy007
@@ -39,8 +36,6 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 	protected P presenter;
 	//回调
 	protected FragmentCallBack mCallBack;
-	//butter
-	protected Unbinder unbinder;
 
 	protected Integer page = 1;
 
@@ -77,8 +72,6 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 		presenter = CreatePresenter();
 		//绑定交换层的生命周期
 		presenter.onAttach((V)this);
-		//初始化butter
-		unbinder = ButterKnife.bind(this, v);
 		//注册Bus
 		Bus.obtain().register(this);
 		initView(v);
@@ -167,8 +160,6 @@ public abstract class BaseFragment<V extends IView, P extends BasePresenter> ext
 		super.onDestroyView();
 		//解绑交换层
 		presenter.onDetach();
-		//解绑butter
-		unbinder.unbind();
 		//解绑Bus
 		Bus.obtain().unregister(this);
 	}

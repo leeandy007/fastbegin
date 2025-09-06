@@ -6,8 +6,6 @@ import android.widget.CheckBox;
 
 import com.andy.fast.util.bus.Bus;
 
-import butterknife.ButterKnife;
-
 public abstract class BaseCheckedHolder<T>{
 
 	protected CheckBox mCheckBox;
@@ -19,7 +17,6 @@ public abstract class BaseCheckedHolder<T>{
 
 	public View CreateView(Context context){
 		View view = View.inflate(context, getLayout(), null);
-		ButterKnife.bind(this, view);
 		Bus.obtain().register(this);
 		return view;
 	}
