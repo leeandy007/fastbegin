@@ -18,31 +18,11 @@ android {
         buildConfigField "int", "BUILD_GRADLE_TEST_STATUS", BuildTestStatus
     }
     buildTypes {
-        debug {
-            buildConfigField "int", "BUILD_GRADLE_STATUS", BuildLibStatus
-            if (BuildLibStatus == BuildReleaseStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseReleaseUrl
-            } else if (BuildLibStatus == BuildDevStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseDevUrl
-            } else if (BuildLibStatus == BuildTestStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseTestUrl
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig = signingConfigs.debug
-        }
-        release {
-            buildConfigField "int", "BUILD_GRADLE_STATUS", BuildLibStatus
-            if (BuildLibStatus == BuildReleaseStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseReleaseUrl
-            } else if (BuildLibStatus == BuildDevStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseDevUrl
-            } else if (BuildLibStatus == BuildTestStatus) {
-                buildConfigField "String", "BUILD_GRADLE_BASEURL", BaseTestUrl
-            }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig = signingConfigs.debug
         }
     }
     lintOptions {
