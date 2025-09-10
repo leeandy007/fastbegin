@@ -83,12 +83,27 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            release(MavenPublication) {
-                from components.findByName('release')
+            // 这个 aarAndroid 可以随便填，只是一个任务名字而已
+            // MavenPublication必须有，这个是调用的任务类
+            aarAndroid(MavenPublication) {
+                // 这里头是artifacts的配置信息，不填会采用默认的
                 groupId = 'com.andy.fast' //groupId 随便取
-                artifactId = 'andy'  //artifactId 随便取
-                version = '1.0.1'
+                artifactId = 'fast'  //artifactId 随便取
+                version = '1.2.1.2'
+
+                // 增加上传源码的 task
+                artifact sourceJar
+                // 必须有这个 否则不会上传AAR包  将bundleReleaseAar任务的单个输出文件作为发布的AAR文件。这样，该AAR文件就会成为 MavenPublication 的 artifact 并进行发布
+                afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
             }
+
         }
     }
 }
+
+// 增加上传源码的task
+tasks.register('sourceJar', Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier = "sources"
+}
+
