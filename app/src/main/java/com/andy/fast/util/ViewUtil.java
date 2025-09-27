@@ -32,100 +32,114 @@ public class ViewUtil {
 
     /**
      * 创建View
+     *
      * @param context
      * @param layoutId
      * @return
      */
-    public static View createView(Context context, int layoutId){
+    public static View createView(Context context, int layoutId) {
         return createView(context, layoutId, null);
     }
 
     /**
      * 创建View
+     *
      * @param context
      * @param layoutId
      * @return
      */
-    public static View createItemView(Context context, int layoutId, ViewGroup viewGroup){
+    public static View createItemView(Context context, int layoutId, ViewGroup viewGroup) {
         return createView(context, layoutId, viewGroup, false);
     }
 
     /**
      * 创建View
+     *
      * @param context
      * @param layoutId
      * @return
      */
-    public static View createView(Context context, int layoutId, ViewGroup viewGroup){
+    public static View createView(Context context, int layoutId, ViewGroup viewGroup) {
         return createView(context, layoutId, viewGroup, viewGroup != null);
     }
 
 
-
     /**
      * 创建View
+     *
      * @param context
      * @param layoutId
      * @param viewGroup
      * @return
      */
-    public static View createView(Context context, int layoutId, ViewGroup viewGroup, boolean atta){
+    public static View createView(Context context, int layoutId, ViewGroup viewGroup, boolean atta) {
         return LayoutInflater.from(context).inflate(layoutId, viewGroup, atta);
     }
 
     /**
      * 沉浸式全屏
      * 配合Activity的 onWindowFocusChanged 方法使用
-     *     @Override
-     *     public void onWindowFocusChanged(boolean hasFocus) {
-     *         super.onWindowFocusChanged(hasFocus);
-     *         if(hasFocus){
-     *             ViewUtil.fullScreen(_context);
-     *         }
-     *     }
+     *
      * @param context
+     * @Override public void onWindowFocusChanged(boolean hasFocus) {
+     * super.onWindowFocusChanged(hasFocus);
+     * if(hasFocus){
+     * ViewUtil.fullScreen(_context);
+     * }
+     * }
      */
     public static void fullScreen(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             View decorView = ((Activity) context).getWindow().getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | //全屏，状态栏会盖在布局上
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | //隐藏导航栏
-                    View.SYSTEM_UI_FLAG_FULLSCREEN | //全屏，状态栏和导航栏不显示
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | //全屏，状态栏会盖在布局上
+                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | //隐藏导航栏
+                            View.SYSTEM_UI_FLAG_FULLSCREEN | //全屏，状态栏和导航栏不显示
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
 
-    public static int screenWidth(Context context){
-        WindowManager manager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+    public static int screenWidth(Context context) {
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.widthPixels;
     }
 
-    public static int screenHeight(Context context){
-        WindowManager manager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+    public static int screenHeight(Context context) {
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
     }
 
-    public enum Model{
+    public enum Model {
         VERTICAL,
         HORIZONTAL
     }
 
-    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin){
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin) {
         initList(context, recyclerView, model, margin, 1, R.color.gray);
     }
 
-    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space){
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space) {
         initList(context, recyclerView, model, margin, space, R.color.gray);
     }
 
-    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space, int color){
+    /**
+     * 列表布局
+     *
+     * @param context
+     * @param recyclerView
+     * @param model   方向
+     * @param margin  间距
+     * @param space   横向是宽度，纵向是高度
+     * @param color   颜色
+     * @return
+     */
+    public static void initList(Context context, RecyclerView recyclerView, Model model, int margin, int space, int color) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         DividerItemDecoration dividerItemDecoration = null;
         switch (model) {
@@ -147,11 +161,11 @@ public class ViewUtil {
      *
      * @param context
      * @param recyclerView
-     * @param row 列数
-     * @param margin
+     * @param row      列数
+     * @param margin   间距
      * @return
      */
-    public static void initGrid(Context context, RecyclerView recyclerView, int row, int margin){
+    public static void initGrid(Context context, RecyclerView recyclerView, int row, int margin) {
         recyclerView.setLayoutManager(new GridLayoutManager(context, row));
         recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
@@ -161,40 +175,46 @@ public class ViewUtil {
      *
      * @param context
      * @param recyclerView
-     * @param row 列数
-     * @param margin
+     * @param model   方向
+     * @param row     列数
+     * @param margin  间距
      * @return
      */
-    public static void initStaggered(Context context, RecyclerView recyclerView, int row, int margin){
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.VERTICAL));
+    public static void initStaggered(Context context, RecyclerView recyclerView, Model model, int row, int margin) {
+        switch (model) {
+            case HORIZONTAL ->
+                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.HORIZONTAL));
+            case VERTICAL ->
+                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(row, StaggeredGridLayoutManager.VERTICAL));
+        }
         recyclerView.addItemDecoration(new MarginDecoration(context, margin));
     }
 
     /**
-     * DIP -> PX 转换
+     * DP -> PX 转换
      *
      * @param context
-     * @param dipValue
+     * @param dpValue
      * @return
      */
-    public static int dip2px(Context context, float dipValue) {
+    public static int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
+        return (int) (dpValue * scale + 0.5f);
     }
 
     /**
-     * PX -> DIP 转换
+     * PX -> DP 转换
      *
      * @param context
      * @param pxValue
      * @return
      */
-    public static int px2dip(Context context, float pxValue) {
+    public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static int getColor(Context context, int resId){
+    public static int getColor(Context context, int resId) {
         return context.getResources().getColor(resId);
     }
 
@@ -226,8 +246,8 @@ public class ViewUtil {
                 // 设置tab左右间距,注意这里不能使用Padding,因为源码中线的宽度是根据tabView的宽度来设置的
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                 params.width = width;
-                params.leftMargin = dip2px(tabLayout.getContext(), 10);
-                params.rightMargin = dip2px(tabLayout.getContext(), 10);
+                params.leftMargin = dp2px(tabLayout.getContext(), 10);
+                params.rightMargin = dp2px(tabLayout.getContext(), 10);
                 tabView.setLayoutParams(params);
                 tabView.invalidate();
             }
@@ -236,19 +256,19 @@ public class ViewUtil {
         }
     }
 
-    public static void updataTab(Context context, TabLayout.Tab tab, boolean isSelected){
+    public static void updataTab(Context context, TabLayout.Tab tab, boolean isSelected) {
         TextView textView = (TextView) tab.getCustomView();
         if (textView == null) {
             textView = new TextView(context);
         }
-        if(isSelected){
+        if (isSelected) {
             float selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 20, context.getResources().getDisplayMetrics());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize);
             float x0 = 25, x1 = 100;
             if (textView.getText().length() == 4) {
                 x0 = 50;
                 x1 = 200;
-            }else if(textView.getText().length() == 3){
+            } else if (textView.getText().length() == 3) {
                 x0 = 40;
                 x1 = 160;
             }
@@ -261,7 +281,7 @@ public class ViewUtil {
             if (textView.getText().length() == 4) {
                 x0 = 44;
                 x1 = 176;
-            } else if(textView.getText().length() == 3){
+            } else if (textView.getText().length() == 3) {
                 x0 = 33;
                 x1 = 132;
             }

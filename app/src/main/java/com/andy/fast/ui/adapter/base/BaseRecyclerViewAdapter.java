@@ -73,7 +73,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void refresh(List<T> list) {
         this._list = list;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     public void refresh(){

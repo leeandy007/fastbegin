@@ -61,7 +61,7 @@ public class FragmentAdapter<T extends Fragment> extends FragmentPagerAdapter {
         this.notifyDataSetChanged();
     }
 
-    public void replaceBean(int position , T t){
+    public void replaceItem(int position , T t){
 		_list.set(position, t);
         this.notifyDataSetChanged();
     }
@@ -73,7 +73,7 @@ public class FragmentAdapter<T extends Fragment> extends FragmentPagerAdapter {
 
 	public void refresh(List<T> list) {
 		this._list = list;
-		notifyDataSetChanged();
+		this.notifyDataSetChanged();
 	}
 
 	public void refresh(){
